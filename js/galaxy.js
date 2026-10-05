@@ -35,6 +35,7 @@ export class CosmicCosmos {
         orbitRadius: 4.2,
         speed: 0.00048,
         angle: 0.9,
+        scale: 1.15,
         colorHex: '#9B4F96',
         isCore: false
       },
@@ -53,6 +54,7 @@ export class CosmicCosmos {
         orbitRadius: 6.0,
         speed: 0.00038,
         angle: 2.5,
+        scale: 1.35,
         colorHex: '#8b5cf6',
         isCore: true
       },
@@ -70,6 +72,7 @@ export class CosmicCosmos {
         orbitRadius: 7.8,
         speed: 0.00030,
         angle: 4.1,
+        scale: 1.25,
         colorHex: '#00f5ff',
         isCore: false
       },
@@ -87,6 +90,7 @@ export class CosmicCosmos {
         orbitRadius: 9.6,
         speed: 0.00024,
         angle: 5.4,
+        scale: 1.35,
         colorHex: '#facc15',
         isCore: false
       },
@@ -104,6 +108,7 @@ export class CosmicCosmos {
         orbitRadius: 11.4,
         speed: 0.00019,
         angle: 1.6,
+        scale: 1.85,
         colorHex: '#f97316',
         isCore: false
       },
@@ -121,6 +126,7 @@ export class CosmicCosmos {
         orbitRadius: 13.2,
         speed: 0.00015,
         angle: 3.3,
+        scale: 1.70,
         colorHex: '#38bdf8',
         isCore: false
       }
@@ -507,13 +513,14 @@ export class CosmicCosmos {
         toneMapped: false
       });
       const iconSprite = new THREE.Sprite(spriteMat);
-      const iconScale = data.isCore ? 0.76 : 0.62;
+      const iconScale = data.scale || (data.isCore ? 1.35 : 1.20);
       iconSprite.scale.set(iconScale, iconScale, 1);
       iconSprite.position.set(0, 0, 0); // Positioned directly on the orbit line
       nodeGroup.add(iconSprite);
 
-      // Invisible Hit-Sphere for Effortless Clickability
-      const hitGeo = new THREE.SphereGeometry(1.0, 16, 16);
+      // Invisible Hit-Sphere for Effortless Clickability (Scaled generously with icon)
+      const hitRadius = Math.max(1.15, iconScale * 0.72);
+      const hitGeo = new THREE.SphereGeometry(hitRadius, 16, 16);
       const hitMat = new THREE.MeshBasicMaterial({
         visible: false
       });
@@ -1074,7 +1081,7 @@ export class CosmicCosmos {
       item.group.position.copy(tiltedVec);
 
       // Subtle organic breathing scale for the floating logo
-      const baseScale = item.data.isCore ? 0.76 : 0.62;
+      const baseScale = item.data.scale || (item.data.isCore ? 1.35 : 1.20);
       const pulse = 1 + Math.sin(Date.now() * 0.0025 + item.data.orbitRadius) * 0.04;
       item.sprite.scale.set(baseScale * pulse, baseScale * pulse, 1);
     });
