@@ -179,13 +179,26 @@ export class CosmicCosmos {
     // 5. Floating Glowing Tech Emblems (No more balls/spheres!)
     this.buildTechEmblems();
 
-    // 6. Lighting
-    const ambientLight = new THREE.AmbientLight(0x080812, 1.0);
+    // 6. Lighting: Deep Ambient + Cyan Photon Glow + Warm Stellar Core
+    const ambientLight = new THREE.AmbientLight(0x181a2e, 1.4);
     this.scene.add(ambientLight);
 
-    const photonLight = new THREE.PointLight(0x00f5ff, 5.0, 50, 1.1);
+    const photonLight = new THREE.PointLight(0x00f5ff, 4.5, 50, 1.1);
     photonLight.position.set(0, 0, 0);
     this.scene.add(photonLight);
+
+    const stellarCoreLight = new THREE.PointLight(0xfff5e6, 3.5, 65, 0.9);
+    stellarCoreLight.position.set(0, 0, 0);
+    this.scene.add(stellarCoreLight);
+
+    // 7. Ambient Companion Celestial Systems (Planets with Moons)
+    this.buildAmbientPlanets();
+
+    // 8. Distant Deep-Space Galaxies & Star Clusters
+    this.buildDistantGalaxies();
+
+    // 9. Dynamic Comets & Cosmic Entities
+    this.initComets();
 
     this.bindEvents();
     this.animate = this.animate.bind(this);
@@ -526,6 +539,449 @@ export class CosmicCosmos {
     this.scene.add(this.orbitsGroup);
   }
 
+  buildAmbientPlanets() {
+    this.ambientPlanetsGroup = new THREE.Group();
+    this.ambientPlanets = [];
+
+    const sphereGeo = new THREE.SphereGeometry(1, 32, 32);
+
+    // Common Moon Texture & Material
+    const moonTex = this.textureLoader.load('assets/textures/moon.jpg');
+    moonTex.colorSpace = THREE.SRGBColorSpace;
+    const moonMat = new THREE.MeshStandardMaterial({
+      map: moonTex,
+      roughness: 0.9,
+      metalness: 0.05
+    });
+
+    // 1. Planet 1: Jovian Giant with 2 Moons
+    const jupiterTex = this.textureLoader.load('assets/textures/jupiter.jpg');
+    jupiterTex.colorSpace = THREE.SRGBColorSpace;
+    const jupiterMat = new THREE.MeshStandardMaterial({
+      map: jupiterTex,
+      roughness: 0.82,
+      metalness: 0.1
+    });
+    const jupiterMesh = new THREE.Mesh(sphereGeo, jupiterMat);
+    jupiterMesh.scale.set(0.46, 0.46, 0.46);
+
+    const jMoon1 = new THREE.Mesh(sphereGeo, moonMat);
+    jMoon1.scale.set(0.075, 0.075, 0.075);
+    const jMoon2 = new THREE.Mesh(sphereGeo, moonMat);
+    jMoon2.scale.set(0.055, 0.055, 0.055);
+    const jupiterMoons = [
+      { mesh: jMoon1, dist: 0.95, speed: 0.032, angle: 0.8, inc: 0.22 },
+      { mesh: jMoon2, dist: 1.45, speed: 0.021, angle: 2.5, inc: -0.18 }
+    ];
+
+    const jupiterSystem = new THREE.Group();
+    jupiterSystem.add(jupiterMesh);
+    jupiterMoons.forEach(m => jupiterSystem.add(m.mesh));
+
+    this.ambientPlanets.push({
+      group: jupiterSystem,
+      planetMesh: jupiterMesh,
+      moons: jupiterMoons,
+      orbitRadius: 7.2,
+      orbitSpeed: 0.00034,
+      currentAngle: 1.8,
+      orbitTilt: 0.16,
+      rotationSpeed: 0.006
+    });
+    this.ambientPlanetsGroup.add(jupiterSystem);
+
+    // 2. Planet 2: Ringed Giant (Saturn) with 1 Moon
+    const saturnTex = this.textureLoader.load('assets/textures/saturn.jpg');
+    saturnTex.colorSpace = THREE.SRGBColorSpace;
+    const saturnMat = new THREE.MeshStandardMaterial({
+      map: saturnTex,
+      roughness: 0.78,
+      metalness: 0.1
+    });
+    const saturnMesh = new THREE.Mesh(sphereGeo, saturnMat);
+    saturnMesh.scale.set(0.42, 0.42, 0.42);
+
+    const ringTex = this.textureLoader.load('assets/textures/saturn_ring.png');
+    ringTex.colorSpace = THREE.SRGBColorSpace;
+    const saturnRingGeo = new THREE.RingGeometry(0.55, 1.15, 64);
+    const saturnRingMat = new THREE.MeshStandardMaterial({
+      map: ringTex,
+      side: THREE.DoubleSide,
+      transparent: true,
+      opacity: 0.88,
+      roughness: 0.5
+    });
+    const saturnRing = new THREE.Mesh(saturnRingGeo, saturnRingMat);
+    saturnRing.rotation.x = Math.PI / 2 + 0.35;
+    saturnRing.rotation.y = 0.15;
+
+    const sMoon1 = new THREE.Mesh(sphereGeo, moonMat);
+    sMoon1.scale.set(0.065, 0.065, 0.065);
+    const saturnMoons = [
+      { mesh: sMoon1, dist: 1.55, speed: 0.018, angle: 3.1, inc: 0.35 }
+    ];
+
+    const saturnSystem = new THREE.Group();
+    saturnSystem.add(saturnMesh);
+    saturnSystem.add(saturnRing);
+    saturnMoons.forEach(m => saturnSystem.add(m.mesh));
+
+    this.ambientPlanets.push({
+      group: saturnSystem,
+      planetMesh: saturnMesh,
+      moons: saturnMoons,
+      orbitRadius: 14.4,
+      orbitSpeed: 0.00017,
+      currentAngle: 4.5,
+      orbitTilt: -0.22,
+      rotationSpeed: 0.007
+    });
+    this.ambientPlanetsGroup.add(saturnSystem);
+
+    // 3. Planet 3: Azure Oasis (Earth-like) with 1 Moon
+    const earthTex = this.textureLoader.load('assets/textures/earth.jpg');
+    earthTex.colorSpace = THREE.SRGBColorSpace;
+    const earthMat = new THREE.MeshStandardMaterial({
+      map: earthTex,
+      roughness: 0.65,
+      metalness: 0.15
+    });
+    const earthMesh = new THREE.Mesh(sphereGeo, earthMat);
+    earthMesh.scale.set(0.32, 0.32, 0.32);
+
+    const eMoon1 = new THREE.Mesh(sphereGeo, moonMat);
+    eMoon1.scale.set(0.055, 0.055, 0.055);
+    const earthMoons = [
+      { mesh: eMoon1, dist: 0.72, speed: 0.038, angle: 1.2, inc: 0.12 }
+    ];
+
+    const earthSystem = new THREE.Group();
+    earthSystem.add(earthMesh);
+    earthMoons.forEach(m => earthSystem.add(m.mesh));
+
+    this.ambientPlanets.push({
+      group: earthSystem,
+      planetMesh: earthMesh,
+      moons: earthMoons,
+      orbitRadius: 11.8,
+      orbitSpeed: 0.00022,
+      currentAngle: 0.4,
+      orbitTilt: 0.12,
+      rotationSpeed: 0.005
+    });
+    this.ambientPlanetsGroup.add(earthSystem);
+
+    // 4. Planet 4: Ice Giant (Neptune) in Outer Reach
+    const neptuneTex = this.textureLoader.load('assets/textures/neptune.jpg');
+    neptuneTex.colorSpace = THREE.SRGBColorSpace;
+    const neptuneMat = new THREE.MeshStandardMaterial({
+      map: neptuneTex,
+      roughness: 0.85,
+      metalness: 0.1
+    });
+    const neptuneMesh = new THREE.Mesh(sphereGeo, neptuneMat);
+    neptuneMesh.scale.set(0.38, 0.38, 0.38);
+
+    const nMoon1 = new THREE.Mesh(sphereGeo, moonMat);
+    nMoon1.scale.set(0.05, 0.05, 0.05);
+    const neptuneMoons = [
+      { mesh: nMoon1, dist: 0.85, speed: 0.024, angle: 5.0, inc: -0.2 }
+    ];
+
+    const neptuneSystem = new THREE.Group();
+    neptuneSystem.add(neptuneMesh);
+    neptuneMoons.forEach(m => neptuneSystem.add(m.mesh));
+
+    this.ambientPlanets.push({
+      group: neptuneSystem,
+      planetMesh: neptuneMesh,
+      moons: neptuneMoons,
+      orbitRadius: 19.8,
+      orbitSpeed: 0.00010,
+      currentAngle: 3.2,
+      orbitTilt: -0.15,
+      rotationSpeed: 0.004
+    });
+    this.ambientPlanetsGroup.add(neptuneSystem);
+
+    this.scene.add(this.ambientPlanetsGroup);
+  }
+
+  buildDistantGalaxies() {
+    this.distantGalaxiesGroup = new THREE.Group();
+    this.distantGalaxies = [];
+
+    const createSpiralGalaxy = (starCount, armCount, radius, innerColor, outerColor, position, tilt) => {
+      const geo = new THREE.BufferGeometry();
+      const pos = new Float32Array(starCount * 3);
+      const col = new Float32Array(starCount * 3);
+
+      const cIn = new THREE.Color(innerColor);
+      const cOut = new THREE.Color(outerColor);
+
+      for (let i = 0; i < starCount; i++) {
+        const i3 = i * 3;
+        const armIndex = i % armCount;
+        const armAngle = (armIndex / armCount) * Math.PI * 2;
+        const dist = Math.pow(Math.random(), 2.2) * radius;
+        const spinAngle = dist * 0.85;
+
+        const spread = (Math.random() - 0.5) * (0.8 + dist * 0.15);
+        const height = (Math.random() - 0.5) * (0.4 + dist * 0.08);
+
+        pos[i3] = Math.cos(armAngle + spinAngle) * dist + spread;
+        pos[i3 + 1] = height;
+        pos[i3 + 2] = Math.sin(armAngle + spinAngle) * dist + spread;
+
+        const starCol = new THREE.Color().lerpColors(cIn, cOut, dist / radius);
+        col[i3] = starCol.r * (0.75 + Math.random() * 0.25);
+        col[i3 + 1] = starCol.g * (0.75 + Math.random() * 0.25);
+        col[i3 + 2] = starCol.b * (0.75 + Math.random() * 0.25);
+      }
+
+      geo.setAttribute('position', new THREE.BufferAttribute(pos, 3));
+      geo.setAttribute('color', new THREE.BufferAttribute(col, 3));
+
+      const mat = new THREE.PointsMaterial({
+        size: 0.28,
+        sizeAttenuation: true,
+        depthWrite: false,
+        blending: THREE.AdditiveBlending,
+        vertexColors: true,
+        map: this.particleTexture,
+        transparent: true,
+        opacity: 0.75
+      });
+
+      const points = new THREE.Points(geo, mat);
+      const group = new THREE.Group();
+      group.add(points);
+      group.position.copy(position);
+      group.rotation.copy(tilt);
+
+      return { group, points, rotationSpeed: 0.0004 };
+    };
+
+    const createEllipticalGalaxy = (starCount, radius, colorHex, position, tilt) => {
+      const geo = new THREE.BufferGeometry();
+      const pos = new Float32Array(starCount * 3);
+      const col = new Float32Array(starCount * 3);
+      const cBase = new THREE.Color(colorHex);
+
+      for (let i = 0; i < starCount; i++) {
+        const i3 = i * 3;
+        const r = Math.pow(Math.random(), 1.8) * radius;
+        const theta = Math.random() * Math.PI * 2;
+        const phi = Math.acos(Math.random() * 2 - 1);
+
+        pos[i3] = r * Math.sin(phi) * Math.cos(theta);
+        pos[i3 + 1] = (r * Math.sin(phi) * Math.sin(theta)) * 0.55;
+        pos[i3 + 2] = (r * Math.cos(phi)) * 0.75;
+
+        col[i3] = cBase.r * (0.8 + Math.random() * 0.2);
+        col[i3 + 1] = cBase.g * (0.8 + Math.random() * 0.2);
+        col[i3 + 2] = cBase.b * (0.8 + Math.random() * 0.2);
+      }
+
+      geo.setAttribute('position', new THREE.BufferAttribute(pos, 3));
+      geo.setAttribute('color', new THREE.BufferAttribute(col, 3));
+
+      const mat = new THREE.PointsMaterial({
+        size: 0.25,
+        sizeAttenuation: true,
+        depthWrite: false,
+        blending: THREE.AdditiveBlending,
+        vertexColors: true,
+        map: this.particleTexture,
+        transparent: true,
+        opacity: 0.68
+      });
+
+      const points = new THREE.Points(geo, mat);
+      const group = new THREE.Group();
+      group.add(points);
+      group.position.copy(position);
+      group.rotation.copy(tilt);
+
+      return { group, points, rotationSpeed: 0.0002 };
+    };
+
+    // 1. Andromeda Azure/Cyan Spiral in Deep Space
+    const g1 = createSpiralGalaxy(
+      1500, 2, 14, 0xffffff, 0x00f5ff,
+      new THREE.Vector3(-120, 55, -140),
+      new THREE.Euler(0.7, 0.4, -0.3)
+    );
+    this.distantGalaxies.push(g1);
+    this.distantGalaxiesGroup.add(g1.group);
+
+    // 2. Whirlpool Violet/Magenta Spiral in Deep Space
+    const g2 = createSpiralGalaxy(
+      1200, 3, 11, 0xffe4e6, 0xa855f7,
+      new THREE.Vector3(140, -45, -130),
+      new THREE.Euler(-0.5, 0.8, 0.6)
+    );
+    this.distantGalaxies.push(g2);
+    this.distantGalaxiesGroup.add(g2.group);
+
+    // 3. Golden Amber Elliptical Galaxy
+    const g3 = createEllipticalGalaxy(
+      900, 9, 0xfacc15,
+      new THREE.Vector3(-80, -60, 150),
+      new THREE.Euler(0.3, -0.4, 0.5)
+    );
+    this.distantGalaxies.push(g3);
+    this.distantGalaxiesGroup.add(g3.group);
+
+    // 4. Compact Globular Star Cluster
+    const g4 = createEllipticalGalaxy(
+      600, 6, 0x38bdf8,
+      new THREE.Vector3(100, 70, 95),
+      new THREE.Euler(0.2, 0.5, -0.2)
+    );
+    this.distantGalaxies.push(g4);
+    this.distantGalaxiesGroup.add(g4.group);
+
+    this.scene.add(this.distantGalaxiesGroup);
+  }
+
+  initComets() {
+    this.activeComets = [];
+    this.maxActiveComets = 2;
+    this.nextCometTime = Date.now() + 2500;
+  }
+
+  spawnComet() {
+    const cometGroup = new THREE.Group();
+
+    // 1. Incandescent Core
+    const coreGeo = new THREE.SphereGeometry(0.18, 16, 16);
+    const coreMat = new THREE.MeshBasicMaterial({
+      color: 0xffffff
+    });
+    const coreMesh = new THREE.Mesh(coreGeo, coreMat);
+    cometGroup.add(coreMesh);
+
+    // Halo Glow
+    const haloMat = new THREE.SpriteMaterial({
+      map: this.particleTexture,
+      color: Math.random() > 0.35 ? 0x00f5ff : 0xfde047,
+      transparent: true,
+      opacity: 0.95,
+      blending: THREE.AdditiveBlending
+    });
+    const halo = new THREE.Sprite(haloMat);
+    halo.scale.set(1.4, 1.4, 1);
+    cometGroup.add(halo);
+
+    // Trail with Gradient Color
+    const trailSegments = 50;
+    const trailGeo = new THREE.BufferGeometry();
+    const trailPositions = new Float32Array(trailSegments * 3);
+    const trailColors = new Float32Array(trailSegments * 3);
+
+    const cHead = new THREE.Color(0xffffff);
+    const cMid = new THREE.Color(haloMat.color);
+    const cTail = new THREE.Color(0x8b5cf6);
+
+    for (let i = 0; i < trailSegments; i++) {
+      const t = i / (trailSegments - 1);
+      const col = new THREE.Color();
+      if (t < 0.25) {
+        col.lerpColors(cHead, cMid, t / 0.25);
+      } else {
+        col.lerpColors(cMid, cTail, (t - 0.25) / 0.75);
+      }
+      const fade = Math.pow(1 - t, 1.5);
+      trailColors[i * 3] = col.r * fade;
+      trailColors[i * 3 + 1] = col.g * fade;
+      trailColors[i * 3 + 2] = col.b * fade;
+    }
+
+    trailGeo.setAttribute('position', new THREE.BufferAttribute(trailPositions, 3));
+    trailGeo.setAttribute('color', new THREE.BufferAttribute(trailColors, 3));
+
+    const trailMat = new THREE.LineBasicMaterial({
+      vertexColors: true,
+      transparent: true,
+      opacity: 0.88,
+      blending: THREE.AdditiveBlending
+    });
+    const trailLine = new THREE.Line(trailGeo, trailMat);
+
+    // Trajectory sweeping across the cosmos
+    const side = Math.random() > 0.5 ? 1 : -1;
+    const startX = side * (40 + Math.random() * 30);
+    const startY = 10 + Math.random() * 25;
+    const startZ = -30 + Math.random() * 30;
+
+    cometGroup.position.set(startX, startY, startZ);
+
+    const endX = -startX * (0.7 + Math.random() * 0.5);
+    const endY = -10 - Math.random() * 15;
+    const endZ = 20 + Math.random() * 35;
+
+    const dir = new THREE.Vector3(endX - startX, endY - startY, endZ - startZ).normalize();
+    const speed = 0.52 + Math.random() * 0.32;
+    const velocity = dir.multiplyScalar(speed);
+
+    const history = [];
+    for (let i = 0; i < trailSegments; i++) {
+      history.push(cometGroup.position.clone());
+    }
+
+    this.scene.add(cometGroup);
+    this.scene.add(trailLine);
+
+    this.activeComets.push({
+      group: cometGroup,
+      trailLine: trailLine,
+      trailGeo: trailGeo,
+      velocity: velocity,
+      history: history,
+      trailSegments: trailSegments,
+      halo: halo,
+      life: 0,
+      maxLife: 260
+    });
+  }
+
+  updateComets() {
+    if (Date.now() > this.nextCometTime && this.activeComets.length < this.maxActiveComets) {
+      this.spawnComet();
+      this.nextCometTime = Date.now() + 6000 + Math.random() * 8000;
+    }
+
+    for (let i = this.activeComets.length - 1; i >= 0; i--) {
+      const comet = this.activeComets[i];
+      comet.life++;
+
+      comet.group.position.add(comet.velocity);
+      comet.history.unshift(comet.group.position.clone());
+      if (comet.history.length > comet.trailSegments) {
+        comet.history.pop();
+      }
+
+      const pos = comet.trailGeo.attributes.position.array;
+      for (let j = 0; j < comet.history.length; j++) {
+        pos[j * 3] = comet.history[j].x;
+        pos[j * 3 + 1] = comet.history[j].y;
+        pos[j * 3 + 2] = comet.history[j].z;
+      }
+      comet.trailGeo.attributes.position.needsUpdate = true;
+
+      const pulse = 1.3 + Math.sin(comet.life * 0.15) * 0.3;
+      comet.halo.scale.set(pulse, pulse, 1);
+
+      if (comet.life > comet.maxLife || comet.group.position.length() > 120) {
+        this.scene.remove(comet.group);
+        this.scene.remove(comet.trailLine);
+        comet.trailGeo.dispose();
+        this.activeComets.splice(i, 1);
+      }
+    }
+  }
+
   bindEvents() {
     window.addEventListener('mousemove', (e) => {
       this.mousePointer.x = (e.clientX / window.innerWidth) * 2 - 1;
@@ -658,13 +1114,48 @@ export class CosmicCosmos {
       this.controls.target.lerp(new THREE.Vector3(0, 0, 0), 0.04);
     }
 
-    // 5. Nebulae slow rotation
+    // 5. Nebulae & Starfield slow rotation
     if (this.nebulaeMesh) {
       this.nebulaeMesh.rotation.y += 0.00008;
     }
     if (this.starfield) {
       this.starfield.rotation.y += 0.00012;
     }
+
+    // 6. Ambient Companion Planets & Moons Motion
+    if (this.ambientPlanets) {
+      this.ambientPlanets.forEach((p) => {
+        p.currentAngle += p.orbitSpeed;
+        const px = Math.cos(p.currentAngle) * p.orbitRadius;
+        const pz = Math.sin(p.currentAngle) * p.orbitRadius;
+        const py = Math.sin(p.currentAngle * 2) * (p.orbitRadius * p.orbitTilt);
+
+        const tiltedPos = new THREE.Vector3(px, py, pz);
+        tiltedPos.applyEuler(this.blackHoleGroup.rotation);
+        p.group.position.copy(tiltedPos);
+
+        p.planetMesh.rotation.y += p.rotationSpeed;
+
+        p.moons.forEach((m) => {
+          m.angle += m.speed;
+          m.mesh.position.set(
+            Math.cos(m.angle) * m.dist,
+            Math.sin(m.angle * 2) * (m.dist * m.inc),
+            Math.sin(m.angle) * m.dist
+          );
+        });
+      });
+    }
+
+    // 7. Distant Deep-Space Galaxies slow spin
+    if (this.distantGalaxies) {
+      this.distantGalaxies.forEach((g) => {
+        g.points.rotation.y += g.rotationSpeed;
+      });
+    }
+
+    // 8. Dynamic Comets update
+    this.updateComets();
 
     this.controls.update();
 

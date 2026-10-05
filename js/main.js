@@ -146,18 +146,7 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 
-  // 4. Audio Control
-  const soundToggleBtn = document.getElementById('sound-toggle');
-  const soundLabel = document.getElementById('sound-label');
-
-  if (soundToggleBtn && soundLabel) {
-    soundToggleBtn.addEventListener('click', () => {
-      const isSoundOn = audio.toggleSound();
-      soundLabel.textContent = isSoundOn ? 'FX: ACTIVO' : 'FX: MUTED';
-      soundToggleBtn.classList.toggle('primary', isSoundOn);
-    });
-  }
-
+  // 4. Subtle UI Audio Feedback on interactive elements
   const soundElements = document.querySelectorAll('button, .action-pill, .constellation-node, a');
   soundElements.forEach(el => {
     el.addEventListener('mouseenter', () => audio.playHover());
