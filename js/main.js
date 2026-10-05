@@ -46,7 +46,7 @@ document.addEventListener('DOMContentLoaded', () => {
       }
 
       if (dossierLink) {
-        dossierLink.href = projectData.link;
+        dossierLink.href = projectData.url || projectData.link || '#';
       }
 
       if (dossier) dossier.classList.add('active');
