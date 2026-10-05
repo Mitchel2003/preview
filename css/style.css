@@ -435,6 +435,38 @@ section {
   opacity: 1;
 }
 
+.system-card.orbital-emerald:hover {
+  border-color: rgba(16, 185, 129, 0.7);
+  box-shadow: 0 16px 36px rgba(0, 0, 0, 0.6), 0 0 28px rgba(16, 185, 129, 0.3);
+}
+.system-card.orbital-emerald::before {
+  background: linear-gradient(90deg, transparent, #10b981, transparent);
+}
+
+.system-card.orbital-violet:hover {
+  border-color: rgba(139, 92, 246, 0.7);
+  box-shadow: 0 16px 36px rgba(0, 0, 0, 0.6), 0 0 28px rgba(139, 92, 246, 0.3);
+}
+.system-card.orbital-violet::before {
+  background: linear-gradient(90deg, transparent, #8b5cf6, transparent);
+}
+
+.system-card.orbital-cyan:hover {
+  border-color: rgba(0, 245, 255, 0.7);
+  box-shadow: 0 16px 36px rgba(0, 0, 0, 0.6), 0 0 28px rgba(0, 245, 255, 0.3);
+}
+.system-card.orbital-cyan::before {
+  background: linear-gradient(90deg, transparent, #00f5ff, transparent);
+}
+
+.system-card.orbital-amber:hover {
+  border-color: rgba(245, 158, 11, 0.7);
+  box-shadow: 0 16px 36px rgba(0, 0, 0, 0.6), 0 0 28px rgba(245, 158, 11, 0.3);
+}
+.system-card.orbital-amber::before {
+  background: linear-gradient(90deg, transparent, #f59e0b, transparent);
+}
+
 .card-top {
   margin-bottom: 20px;
 }

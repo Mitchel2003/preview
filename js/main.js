@@ -27,6 +27,18 @@ document.addEventListener('DOMContentLoaded', () => {
     el.addEventListener('click', () => audio.playClick());
   });
 
+  // Link System Cards hover directly to 3D Orbital Nodes
+  const systemCards = document.querySelectorAll('.system-card[id]');
+  systemCards.forEach((card) => {
+    const nodeId = card.id.replace('card-', '');
+    card.addEventListener('mouseenter', () => {
+      if (galaxy) galaxy.highlightNode(nodeId);
+    });
+    card.addEventListener('mouseleave', () => {
+      if (galaxy) galaxy.highlightNode(null);
+    });
+  });
+
   // 3. Telemetry Clock (Bogotá UTC-5)
   const timeDisplay = document.getElementById('telemetry-time');
   if (timeDisplay) {
