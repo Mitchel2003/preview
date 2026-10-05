@@ -1,103 +1,54 @@
-# Hey 👋, I am Michael!
+# 🌌 Michael Avilés — Cosmic 3D Portfolio & Systems Portal
+
+> Interactive 3D WebGL Portfolio & Systems Architecture Portal designed for high-impact web presence, deployed seamlessly on Vercel.
+
+[![Vercel Deployment](https://img.shields.io/badge/Deploy-Vercel-black?style=for-the-badge&logo=vercel)](https://vercel.com)
+[![Three.js](https://img.shields.io/badge/Three.js-WebGL-00f5ff?style=for-the-badge&logo=threedotjs&logoColor=black)](https://threejs.org/)
+[![Web Audio API](https://img.shields.io/badge/Web_Audio_API-Procedural_FX-8b5cf6?style=for-the-badge)](https://developer.mozilla.org/en-US/docs/Web/API/Web_Audio_API)
+[![No Build Step](https://img.shields.io/badge/Build_Step-Zero_Config_ESM-10b981?style=for-the-badge)](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Modules)
 
 ---
 
-<h3 align="center">
-  <span style="color: #38bdf8;">Software Architect & Full-Stack Systems Engineer</span>
-</h3>
+## ⚡ Overview
 
-### 🧑‍💻 About Me
+This portal serves as the primary interactive gateway for **Michael Antony Avilés** (DevOps Lead & Systems Engineer), featuring:
 
-I am a Software Engineer focused on designing and building mission-critical enterprise applications, domain-driven architectures (DDD), and resilient multi-tenant platforms where security, strict data invariants, and high reliability are non-negotiable.
-
-Beyond web and mobile architectures, I specialize in workflow automation and low-level systems: from building robust RPA bots with Playwright, BullMQ, and Redis to solve complex portals and captchas, to developing desktop automation tools in C#/.NET leveraging native Win32 APIs and real-time screen analysis.
-
-I actively integrate AI-assisted agentic workflows, Spec-Driven Development (SDD), and automated CI/CD pipelines to raise code quality, test effectiveness, and delivery velocity.
-
-### ⚒️ Dev Stack
-
-<p align="left">
-  <a href="https://www.typescriptlang.org/" target="_blank" rel="noreferrer"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/typescript/typescript-original.svg" alt="typescript" width="42" height="42"/></a>
-  &nbsp;
-  <a href="https://react.dev/" target="_blank" rel="noreferrer"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/react/react-original.svg" alt="react" width="42" height="42"/></a>
-  &nbsp;
-  <a href="https://nodejs.org/" target="_blank" rel="noreferrer"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/nodejs/nodejs-original.svg" alt="nodejs" width="42" height="42"/></a>
-  &nbsp;
-  <a href="https://dotnet.microsoft.com/" target="_blank" rel="noreferrer"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/csharp/csharp-original.svg" alt="csharp" width="42" height="42"/></a>
-  &nbsp;
-  <a href="https://dotnet.microsoft.com/" target="_blank" rel="noreferrer"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/dot-net/dot-net-original.svg" alt="dotnet" width="42" height="42"/></a>
-  &nbsp;
-  <a href="https://www.python.org/" target="_blank" rel="noreferrer"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/python/python-original.svg" alt="python" width="42" height="42"/></a>
-  &nbsp;
-  <a href="https://www.postgresql.org/" target="_blank" rel="noreferrer"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/postgresql/postgresql-original.svg" alt="postgresql" width="42" height="42"/></a>
-  &nbsp;
-  <a href="https://redis.io/" target="_blank" rel="noreferrer"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/redis/redis-original.svg" alt="redis" width="42" height="42"/></a>
-  &nbsp;
-  <a href="https://playwright.dev/" target="_blank" rel="noreferrer"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/playwright/playwright-original.svg" alt="playwright" width="42" height="42"/></a>
-  &nbsp;
-  <a href="https://www.docker.com/" target="_blank" rel="noreferrer"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/docker/docker-original.svg" alt="docker" width="42" height="42"/></a>
-  &nbsp;
-  <a href="https://tailwindcss.com/" target="_blank" rel="noreferrer"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/tailwindcss/tailwindcss-original.svg" alt="tailwindcss" width="42" height="42"/></a>
-  &nbsp;
-  <a href="https://git-scm.com/" target="_blank" rel="noreferrer"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/git/git-original.svg" alt="git" width="42" height="42"/></a>
-</p>
+- **GPU 3D Cosmic Galaxy:** Procedurally generated 4-branch spiral galaxy rendered in WebGL using **Three.js** with interactive mouse/touch parallax and warp acceleration effect (*Warp Pulse*).
+- **Native Sci-Fi Audio Synthesizer:** Pure procedural sound engine built with the **Web Audio API** (drone ambient + reactive UI chirps, muted by default for browser compliance).
+- **Interactive Sci-Fi HUD:** Real-time telemetry (Bogotá COT clock, mission status, warp engine status, sound toggle).
+- **Enterprise Showcase:** Deep dives into mission-critical systems:
+  - **Systime:** Enterprise ecosystem for automotive dealerships (.NET 10, Azure SQL, GitHub Actions, Quiter ERP integration, Android).
+  - **Sysmed / Ingest:** Biomedical tracking platform with Hexagonal Architecture, TypeScript, CASL RBAC, BullMQ/Redis, and PostgreSQL.
+  - **Blazor & MAUI Clean Architecture:** DDD reference architecture in .NET.
+  - **RPA & Low-Level Automation:** Native Win32 and Playwright screen automation bots.
+- **Embedded Interactive CV:** Built-in modal viewer for [`cv_template.html`](cv_template.html) with 1-click print/PDF export.
 
 ---
 
-<h2 align="left">🏆 Contributions</h2>
-<p align="center">
-    <!--Streak-stats-->
-  <a href="https://github.com/Mitchel2003?tab=repositories">
-    <img height="180em" src="https://streak-stats.demolab.com?user=Mitchel2003&theme=radical&hide_border=true" alt="GitHub Streak" />
-  </a>
-    <!--Lapras-card-->
-  <a href="https://lapras.com/public/KFSJXU0">
-    <img height="180em" alt="lapras-card" src="https://lapras-card-generator.vercel.app/api/svg?e=3.28&b=3.36&i=2.46&b1=%230a0a0a&b2=%23c70000&i1=%23292929&i2=%23675b5b&l=en&u=KFSJXU0">
-  </a>
-</p>
+## 🛠️ Tech Stack & Architecture
+
+- **Rendering Engine:** [Three.js](https://threejs.org/) (via native browser ES Modules / Import Maps)
+- **Audio Engine:** Native Web Audio API (`AudioContext`, `BiquadFilter`, `OscillatorNode`)
+- **Structure:** Semantic HTML5, Modern CSS (Glassmorphism, CSS Custom Properties, Responsive Flexbox/Grid)
+- **Deployment:** Instant static hosting on [Vercel](https://vercel.com) via `vercel.json`
 
 ---
 
-<h2 align="left">📊 Github Analytics</h2>
+## 🚀 Local Development
 
-<p align="center">
-  <a href="https://github.com/Mitchel2003">
-    <!--Most-used-lenguage-->
-    <img height="180em" src="https://github-readme-stats.vercel.app/api/top-langs/?username=Mitchel2003&layout=compact&langs_count=8&theme=radical&hide_border=true" alt="Top Languages"/>
-    <!--Github-stats-->
-    <img height="180em" src="https://github-readme-stats.vercel.app/api?username=Mitchel2003&show_icons=true&theme=radical&hide_border=true&include_all_commits=true&count_private=true" alt="GitHub Stats" />
-    <!--Trophies-stats-->
-    <img src="https://trophy.ryglcloud.net/?username=Mitchel2003&theme=radical&no-frame=true&row=1&column=7" alt="Trophies" />
-  </a>
-</p>
+Since this project uses native modern ES Modules, no build step (`npm run build`) is required:
 
----
+```bash
+# Serve locally using any static web server (e.g. VS Code Live Server, python, or npx serve)
+npx serve .
+# or
+python -m http.server 8080
+```
 
-<h2 align="left">🐍 Contribution Snake</h2>
-
-<div align="center">
-  <picture>
-    <source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/Mitchel2003/Mitchel2003/output/github-contribution-grid-snake-dark.svg" />
-    <source media="(prefers-color-scheme: light)" srcset="https://raw.githubusercontent.com/Mitchel2003/Mitchel2003/output/github-contribution-grid-snake.svg" />
-    <img alt="github contribution grid snake" src="https://raw.githubusercontent.com/Mitchel2003/Mitchel2003/output/github-contribution-grid-snake.svg" />
-  </picture>
-</div>
+Open `http://localhost:8080` in your browser.
 
 ---
 
-<h2 align="left" style="display: flex; justify-content: space-between; align-items: center;">
-  📫 Connect with Me
-  <img align="right" src="https://komarev.com/ghpvc/?username=Mitchel2003&label=Profile%20Views&color=brightgreen" alt="Profile Views" />
-</h2>
+## 🌐 Deploy to Vercel
 
-<p align="left">
-  <a href="mailto:avilesmaicol.08@gmail.com">
-    <img src="https://img.shields.io/badge/Gmail-D14836?style=for-the-badge&logo=gmail&logoColor=white" alt="Gmail" />
-  </a>
-  <a href="https://linkedin.com/in/Mitchel2003" target="_blank">
-    <img src="https://img.shields.io/badge/LinkedIn-0077B5?style=for-the-badge&logo=linkedin&logoColor=white" alt="LinkedIn" />
-  </a>
-  <a href="https://github.com/Mitchel2003" target="_blank">
-    <img src="https://img.shields.io/badge/GitHub-181717?style=for-the-badge&logo=github&logoColor=white" alt="GitHub" />
-  </a>
-</p>
+Import this repository directly into [Vercel](https://vercel.com) with standard static preset. Zero build commands needed.

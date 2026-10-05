@@ -1,0 +1,339 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CV - Michael Antony Avilés | DevOps & Systems Engineer</title>
+  <style>
+    :root {
+      --primary: #0f172a;
+      --secondary: #334155;
+      --accent: #1d4ed8;
+      --text: #1e293b;
+      --muted: #64748b;
+      --border: #cbd5e1;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+      color: var(--text);
+      background-color: #f1f5f9;
+      line-height: 1.36;
+      font-size: 12.6px;
+      padding: 16px;
+    }
+
+    .page {
+      max-width: 840px;
+      margin: 0 auto;
+      background: #ffffff;
+      padding: 26px 36px;
+      border: 1px solid var(--border);
+      box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+    }
+
+    header {
+      border-bottom: 2px solid var(--primary);
+      padding-bottom: 7px;
+      margin-bottom: 9px;
+    }
+
+    h1 {
+      font-size: 21.5px;
+      color: var(--primary);
+      font-weight: 800;
+      letter-spacing: -0.02em;
+      text-transform: uppercase;
+    }
+
+    .title {
+      font-size: 12.8px;
+      font-weight: 700;
+      color: var(--accent);
+      margin-top: 1px;
+      margin-bottom: 4px;
+    }
+
+    .contact-bar {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      font-size: 11.2px;
+      color: var(--secondary);
+    }
+
+    .contact-bar a {
+      color: var(--secondary);
+      text-decoration: none;
+      font-weight: 500;
+    }
+
+    .contact-bar a:hover {
+      color: var(--accent);
+      text-decoration: underline;
+    }
+
+    section {
+      margin-bottom: 9px;
+    }
+
+    h2 {
+      font-size: 11.5px;
+      font-weight: 800;
+      color: var(--primary);
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      border-bottom: 1px solid var(--border);
+      padding-bottom: 2px;
+      margin-bottom: 5px;
+    }
+
+    .summary {
+      color: var(--secondary);
+      text-align: justify;
+      font-size: 11.8px;
+    }
+
+    .skills-grid {
+      display: grid;
+      grid-template-columns: 140px 1fr;
+      row-gap: 2.8px;
+      font-size: 11.6px;
+    }
+
+    .skill-cat {
+      font-weight: 700;
+      color: var(--primary);
+    }
+
+    .skill-list {
+      color: var(--secondary);
+    }
+
+    .item {
+      margin-bottom: 7.5px;
+    }
+
+    .item-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      font-size: 12px;
+    }
+
+    .role {
+      font-weight: 700;
+      color: var(--primary);
+    }
+
+    .company {
+      font-weight: 600;
+      color: var(--secondary);
+    }
+
+    .date-location {
+      font-size: 11px;
+      color: var(--muted);
+      font-style: italic;
+    }
+
+    ul.bullets {
+      list-style-type: disc;
+      margin-left: 15px;
+      margin-top: 2px;
+      color: var(--secondary);
+      font-size: 11.6px;
+    }
+
+    ul.bullets li {
+      margin-bottom: 1.8px;
+    }
+
+    ul.bullets li strong {
+      color: var(--primary);
+    }
+
+    .proj-link {
+      font-size: 10.8px;
+      color: var(--accent);
+      text-decoration: none;
+      margin-left: 5px;
+    }
+
+    .proj-link:hover {
+      text-decoration: underline;
+    }
+
+    @media print {
+      body {
+        background: none;
+        padding: 0;
+      }
+
+      .page {
+        border: none;
+        box-shadow: none;
+        padding: 0;
+        max-width: 100%;
+      }
+
+      @page {
+        size: letter;
+        margin: 0.7cm 0.9cm;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="page">
+    <header>
+      <h1>Michael Antony Avilés</h1>
+      <div class="title">DevOps & Systems Lead | .NET, Azure Cloud, Multi-tenant Systems & CI/CD</div>
+      <div class="contact-bar">
+        <span>Bogotá, Colombia (Remoto)</span>
+        <span>•</span>
+        <a href="mailto:avilesmaicol.08@gmail.com">avilesmaicol.08@gmail.com</a>
+        <span>•</span>
+        <a href="https://linkedin.com/in/Mitchel2003" target="_blank">linkedin.com/in/Mitchel2003</a>
+        <span>•</span>
+        <a href="https://github.com/Mitchel2003" target="_blank">github.com/Mitchel2003</a>
+        <span>•</span>
+        <a href="index.html">Portal Web</a>
+      </div>
+    </header>
+
+    <section>
+      <h2>Perfil Profesional</h2>
+      <p class="summary">
+        Ingeniero de Sistemas y DevOps con 3 años de trayectoria ascendente, transitando desde semillero y arquitectura hexagonal hasta liderar la infraestructura cloud y salidas a producción de plataformas empresariales críticas. Especialista en <strong>Microsoft Azure</strong> (App Services, Azure SQL, Resource Groups) y automatización CI/CD con <strong>GitHub Actions</strong> (runners self-hosted, pruebas arquitectónicas e inspectores preflight). Diseñador de soluciones <strong>multitenant</strong> con integración a <strong>ERPs automotrices (Quiter DMS)</strong>, control de acceso granular (<strong>RBAC</strong>) y despliegues móviles en <strong>Google Play Console</strong>. Domina los ecosistemas <strong>.NET y TypeScript</strong> con un perfil colaborativo y de liderazgo técnico.
+      </p>
+    </section>
+
+    <section>
+      <h2>Competencias Técnicas</h2>
+      <div class="skills-grid">
+        <div class="skill-cat">DevOps & Cloud:</div>
+        <div class="skill-list">Microsoft Azure (App Services, Azure SQL, Resource Groups, App Insights), GitHub Actions (CI/CD, Self-hosted Runners), Docker, Google Play Console.</div>
+
+        <div class="skill-cat">Backend & Arquitectura:</div>
+        <div class="skill-list">.NET 8/10, C#, ASP.NET Core Web API, Entity Framework Core, Node.js/TypeScript, Multitenancia, RBAC (CASL), Clean Architecture, DDD, CQRS, Integraciones ERP.</div>
+
+        <div class="skill-cat">Frontend & Mobile:</div>
+        <div class="skill-list">TypeScript, React 18, TanStack (Router, Query), Blazor WebAssembly (MVVM), TailwindCSS, Capacitor (Android/Mobile), Vite.</div>
+
+        <div class="skill-cat">Bases de Datos & Caché:</div>
+        <div class="skill-list">SQL Server (T-SQL, optimización de queries, índices, transacciones), PostgreSQL (Prisma), Redis (BullMQ para colas de eventos), MongoDB.</div>
+
+        <div class="skill-cat">Liderazgo & Metodología:</div>
+        <div class="skill-list">Liderazgo Técnico, Gestión de Salidas a Producción, Pruebas de Arquitectura y Unitarias (xUnit, Vitest), Flujos con IA, Scrum.</div>
+      </div>
+    </section>
+
+    <section>
+      <h2>Experiencia Profesional & Trayectoria Ascendente</h2>
+
+      <div class="item">
+        <div class="item-header">
+          <div>
+            <span class="role">DevOps Lead & Systems Engineer</span> — <span class="company">Plataforma Systime</span>
+          </div>
+          <div class="date-location">Jul 2025 – Presente (1 año y 3 meses)</div>
+        </div>
+        <ul class="bullets">
+          <li><strong>Gestión de Producción & Azure:</strong> Lidero los despliegues a producción y administración de infraestructura en <strong>Microsoft Azure</strong> (App Services, Resource Groups, Azure SQL), garantizando alta disponibilidad sin interrupciones.</li>
+          <li><strong>Pipelines CI/CD & Calidad:</strong> Administro pipelines de <strong>GitHub Actions</strong> con <em>runners self-hosted</em>, incorporando compuertas de pruebas arquitectónicas, suites unitarias e inspectores <em>preflight</em> para migraciones desatendidas.</li>
+          <li><strong>Integración ERP & Multitenancy:</strong> Lideré la sincronización bidireccional en tiempo real con el ERP automotriz <strong>Quiter</strong> bajo arquitectura multitenant con aislamiento riguroso de datos y seguridad <strong>RBAC</strong>.</li>
+          <li><strong>Distribución Móvil:</strong> Responsable directo del ciclo de empaquetado y publicación de las soluciones operativas en <strong>Google Play Console</strong>.</li>
+        </ul>
+      </div>
+
+      <div class="item">
+        <div class="item-header">
+          <div>
+            <span class="role">Full-Stack Engineer & Co-Diseñador de Arquitectura</span> — <span class="company">Tecnoparque SENA & Equipo Biomédico (Sysmed)</span>
+          </div>
+          <div class="date-location">Oct 2024 – Jun 2025 (9 meses)</div>
+        </div>
+        <ul class="bullets">
+          <li>Co-diseñé y construí la plataforma de gestión biomédica y auditorías regulatorias (<strong>mern_crud / Ingest ➔ Sysmed</strong>) junto a ingenieros biomédicos.</li>
+          <li>Implementé arquitectura hexagonal en <strong>TypeScript</strong> con invalidación de caché, agregaciones en <strong>MongoDB</strong> y persistencia en <strong>PostgreSQL (Prisma)</strong>.</li>
+          <li>Diseñé el sistema de permisos granulares con <strong>CASL (RBAC)</strong>, colas de eventos en segundo plano con <strong>BullMQ/Redis</strong> e interfaces SPA en <strong>React 18 y TailwindCSS</strong>.</li>
+        </ul>
+      </div>
+
+      <div class="item">
+        <div class="item-header">
+          <div>
+            <span class="role">Desarrollador Junior (Semillero & Proyecto de Grado)</span> — <span class="company">WPost & SENA (Gestión Salud)</span>
+          </div>
+          <div class="date-location">Oct 2023 – Jun 2024 (9 meses)</div>
+        </div>
+        <ul class="bullets">
+          <li>Inicié en semillero técnico en <strong>WPost</strong> (Oct – Dic 2023) asimilando flujos de trabajo profesionales, control de versiones en GitHub y buenas prácticas de desarrollo.</li>
+          <li>Desarrollé el proyecto de grado <strong>Gestión Salud</strong> (Ene – Jun 2024), modelando la base de datos relacional y las operaciones CRUD iniciales que sentaron las bases para soluciones del sector médico.</li>
+        </ul>
+      </div>
+    </section>
+
+    <section>
+      <h2>Proyectos Técnicos Destacados</h2>
+
+      <div class="item">
+        <div class="item-header">
+          <div>
+            <span class="role">Systime — Ecosistema Enterprise para Talleres & Concesionarios</span>
+          </div>
+          <div class="date-location">.NET 10, Azure, GitHub Actions, Quiter ERP, Android</div>
+        </div>
+        <ul class="bullets">
+          <li>Plataforma en producción con integración bidireccional a ERP Quiter, multitenancy estricto, compuertas CI/CD automatizadas y apps en Google Play.</li>
+        </ul>
+      </div>
+
+      <div class="item">
+        <div class="item-header">
+          <div>
+            <span class="role">Sysmed / Ingest — Sistema de Gestión Biomédica & Trazabilidad INVIMA</span>
+          </div>
+          <div class="date-location"><a href="https://github.com/Mitchel2003/mern_crud" target="_blank" class="proj-link">[Repo v0 mern_crud]</a></div>
+        </div>
+        <ul class="bullets">
+          <li>Evolución desde el prototipo en Tecnoparque hasta plataforma con RBAC, PostgreSQL/Prisma y colas asíncronas BullMQ/Redis.</li>
+        </ul>
+      </div>
+
+      <div class="item">
+        <div class="item-header">
+          <div>
+            <span class="role">Blazor WebAssembly & MAUI Clean Architecture</span>
+          </div>
+          <div class="date-location"><a href="https://github.com/Mitchel2003/Blazor-web-assembly" target="_blank" class="proj-link">[Ver en GitHub]</a></div>
+        </div>
+        <ul class="bullets">
+          <li>Arquitectura de referencia en .NET con DDD, separación estricta por capas y ViewModels agnósticos a UI bajo MVVM.</li>
+        </ul>
+      </div>
+    </section>
+
+    <section>
+      <h2>Educación</h2>
+      <div class="item">
+        <div class="item-header">
+          <div>
+            <span class="role">Tecnólogo en Análisis y Desarrollo de Software (ADSO) / Sistemas</span> — <span class="company">SENA</span>
+          </div>
+          <div class="date-location">2022 – 2024</div>
+        </div>
+      </div>
+    </section>
+  </div>
+
+</body>
+</html>
