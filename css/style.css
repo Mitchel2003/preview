@@ -73,126 +73,131 @@ body.cosmos-artistic-mode {
   z-index: 2;
 }
 
-/* Artistic Minimalist Header */
-.hud-header {
+/* Floating Corner Action Deck (Audio, CV, LinkedIn) */
+.floating-top-actions {
   position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  z-index: 80;
-  padding: 16px 32px;
-  background: rgba(0, 0, 0, 0.65);
+  top: 24px;
+  right: 28px;
+  z-index: 100;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.action-pill {
+  font-family: var(--font-mono);
+  font-size: 0.74rem;
+  padding: 8px 16px;
+  border-radius: 9999px;
+  background: rgba(8, 10, 16, 0.75);
   backdrop-filter: blur(20px);
   -webkit-backdrop-filter: blur(20px);
-  border-bottom: 1px solid var(--border-delicate);
-}
-
-.hud-content {
-  max-width: 1440px;
-  margin: 0 auto;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 16px;
-}
-
-.hud-brand {
-  display: flex;
-  align-items: center;
-  gap: 14px;
-}
-
-.hud-avatar {
-  width: 36px;
-  height: 36px;
-  border-radius: 50%;
-  border: 1px solid rgba(255, 255, 255, 0.3);
-  object-fit: cover;
-}
-
-.hud-callsign {
-  display: flex;
-  flex-direction: column;
-}
-
-.hud-name {
-  font-family: var(--font-serif);
-  font-style: italic;
-  font-size: 1.25rem;
-  font-weight: 500;
-  color: #ffffff;
-  letter-spacing: 0.02em;
-}
-
-.hud-tag {
-  font-family: var(--font-mono);
-  font-size: 0.68rem;
-  color: var(--text-muted);
-  letter-spacing: 0.15em;
-  text-transform: uppercase;
-}
-
-.hud-telemetry {
-  display: flex;
-  align-items: center;
-  gap: 24px;
-  font-family: var(--font-mono);
-  font-size: 0.74rem;
-  color: var(--text-secondary);
-}
-
-.telemetry-item {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-}
-
-.status-beacon {
-  width: 6px;
-  height: 6px;
-  border-radius: 50%;
-  background-color: var(--emerald);
-  box-shadow: 0 0 8px var(--emerald);
-}
-
-.hud-actions {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-}
-
-.hud-btn {
-  font-family: var(--font-mono);
-  font-size: 0.74rem;
-  padding: 6px 14px;
-  border-radius: 9999px;
-  background: rgba(255, 255, 255, 0.04);
   border: 1px solid var(--border-delicate);
   color: var(--text-main);
   cursor: pointer;
   display: inline-flex;
   align-items: center;
-  gap: 6px;
+  gap: 8px;
   text-decoration: none;
-  transition: all 0.25s ease;
+  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
 }
 
-.hud-btn:hover {
+.action-pill:hover {
   background: rgba(255, 255, 255, 0.12);
   border-color: rgba(255, 255, 255, 0.3);
-  transform: translateY(-1px);
+  transform: translateY(-2px);
+  box-shadow: 0 6px 24px rgba(0, 0, 0, 0.7);
 }
 
-.hud-btn.primary {
+.action-pill.primary {
   background: rgba(255, 255, 255, 0.95);
   color: #000000;
   font-weight: 600;
   border-color: #ffffff;
 }
 
-.hud-btn.primary:hover {
+.action-pill.primary:hover {
   background: #ffffff;
-  box-shadow: 0 0 16px rgba(255, 255, 255, 0.3);
+  box-shadow: 0 0 20px rgba(255, 255, 255, 0.35);
+}
+
+.action-pill.primary svg {
+  color: #000000;
+}
+
+.ctrl-arrow {
+  font-size: 0.85rem;
+  transition: transform 0.2s ease;
+}
+
+.action-pill:hover .ctrl-arrow {
+  transform: translate(2px, -2px);
+}
+
+/* GitHub Profile Badge (Next to Name in Presentation) */
+.name-header-row {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 20px;
+  margin-bottom: 8px;
+  flex-wrap: wrap;
+}
+
+.github-profile-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  padding: 8px 16px;
+  background: rgba(255, 255, 255, 0.05);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid var(--border-delicate);
+  border-radius: 9999px;
+  color: #ffffff;
+  text-decoration: none;
+  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.4);
+  align-self: center;
+}
+
+.github-profile-badge:hover {
+  background: rgba(255, 255, 255, 0.14);
+  border-color: rgba(255, 255, 255, 0.35);
+  transform: translateY(-2px);
+  box-shadow: 0 8px 24px rgba(255, 255, 255, 0.12);
+}
+
+.github-badge-text {
+  display: flex;
+  flex-direction: column;
+  line-height: 1.15;
+}
+
+.github-label {
+  font-family: var(--font-mono);
+  font-size: 0.62rem;
+  color: var(--text-muted);
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.github-handle {
+  font-family: var(--font-mono);
+  font-size: 0.82rem;
+  font-weight: 600;
+  color: #ffffff;
+}
+
+.github-arrow {
+  font-size: 0.88rem;
+  color: var(--gold);
+  transition: transform 0.2s ease;
+}
+
+.github-profile-badge:hover .github-arrow {
+  transform: translate(2px, -2px);
 }
 
 /* Two-Phase Scroll Container */
@@ -208,7 +213,7 @@ body.cosmos-artistic-mode {
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 110px 24px 70px 24px;
+  padding: 80px 24px 60px 24px;
 }
 
 .profile-artistic {
@@ -591,58 +596,172 @@ body.cosmos-artistic-mode {
   background: rgba(255, 255, 255, 0.15);
 }
 
-/* Tactical Orbital Dock (Refined glass pill) */
-.orbit-dock {
+/* Tactical Orbital Constellation Dock */
+.dock-container {
   position: fixed;
   bottom: 24px;
   left: 50%;
-  transform: translateX(-50%);
+  transform: translateX(-50%) translateY(20px);
   z-index: 50;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.45s ease, transform 0.45s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.dock-container.visible {
+  opacity: 1;
+  pointer-events: auto;
+  transform: translateX(-50%) translateY(0);
+}
+
+.dock-hud-readout {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: rgba(4, 6, 12, 0.85);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 9999px;
+  padding: 4px 14px;
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.6);
+  transition: all 0.3s ease;
+}
+
+.readout-orbit {
+  color: var(--gold);
+  letter-spacing: 0.1em;
+  font-weight: 600;
+}
+
+.readout-name {
+  color: #ffffff;
+  font-weight: 500;
+}
+
+.readout-tech {
+  color: var(--text-secondary);
+}
+
+.constellation-dock {
   display: flex;
   align-items: center;
   gap: 8px;
-  background: rgba(6, 8, 14, 0.85);
-  backdrop-filter: blur(24px);
-  -webkit-backdrop-filter: blur(24px);
+  background: rgba(6, 8, 14, 0.88);
+  backdrop-filter: blur(28px);
+  -webkit-backdrop-filter: blur(28px);
   border: 1px solid var(--border-delicate);
   border-radius: 9999px;
-  padding: 6px 14px;
-  box-shadow: 0 16px 40px rgba(0, 0, 0, 0.9);
-  opacity: 0;
-  pointer-events: none;
-  transition: opacity 0.45s ease, transform 0.45s ease;
+  padding: 8px 14px;
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.9), 0 0 30px rgba(0, 245, 255, 0.06);
 }
 
-.orbit-dock.visible {
-  opacity: 1;
-  pointer-events: auto;
-}
-
-.dock-btn {
-  font-family: var(--font-mono);
-  font-size: 0.75rem;
-  padding: 7px 14px;
-  border-radius: 9999px;
-  color: var(--text-secondary);
-  background: none;
-  border: 1px solid transparent;
-  cursor: pointer;
-  display: inline-flex;
+.constellation-node {
+  position: relative;
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  display: flex;
   align-items: center;
-  gap: 8px;
-  transition: all 0.25s ease;
-  white-space: nowrap;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+  color: var(--text-secondary);
 }
 
-.dock-btn:hover, .dock-btn.active {
-  color: #ffffff;
-  background: rgba(255, 255, 255, 0.12);
-  border-color: rgba(255, 255, 255, 0.25);
+.constellation-node:hover {
+  background: rgba(255, 255, 255, 0.14);
+  border-color: rgba(255, 255, 255, 0.35);
+  transform: translateY(-3px) scale(1.1);
+  box-shadow: 0 0 16px rgba(0, 245, 255, 0.25);
 }
 
-.dock-btn.active {
-  font-weight: 600;
+.constellation-node.active {
+  background: rgba(255, 255, 255, 0.18);
+  border-color: var(--cyan);
+  box-shadow: 0 0 22px rgba(0, 245, 255, 0.45);
+  transform: translateY(-2px) scale(1.08);
+}
+
+.constellation-node.core-node.active {
+  border-color: var(--violet);
+  box-shadow: 0 0 24px rgba(139, 92, 246, 0.55);
+}
+
+.node-icon-symbol {
+  font-size: 1.2rem;
+  line-height: 1;
   color: var(--gold);
+}
+
+.node-icon-img {
+  width: 22px;
+  height: 22px;
+  object-fit: contain;
+  transition: transform 0.2s ease;
+}
+
+.constellation-node:hover .node-icon-img {
+  transform: scale(1.12);
+}
+
+.constellation-divider {
+  width: 1px;
+  height: 24px;
+  background: var(--border-delicate);
+  margin: 0 2px;
+}
+
+.node-tooltip {
+  position: absolute;
+  bottom: calc(100% + 10px);
+  left: 50%;
+  transform: translateX(-50%) translateY(4px);
+  background: rgba(4, 6, 10, 0.95);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid var(--border-delicate);
+  border-radius: 6px;
+  padding: 4px 10px;
+  font-family: var(--font-mono);
+  font-size: 0.68rem;
+  color: #ffffff;
+  white-space: nowrap;
+  pointer-events: none;
+  opacity: 0;
+  transition: all 0.2s ease;
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.8);
+}
+
+.constellation-node:hover .node-tooltip {
+  opacity: 1;
+  transform: translateX(-50%) translateY(0);
+}
+
+@media (max-width: 768px) {
+  .constellation-dock {
+    gap: 4px;
+    padding: 6px 10px;
+  }
+  .constellation-node {
+    width: 38px;
+    height: 38px;
+  }
+  .node-icon-img {
+    width: 18px;
+    height: 18px;
+  }
+  .node-tooltip {
+    display: none;
+  }
 }
 
 /* CV Modal */

@@ -6,8 +6,13 @@ document.addEventListener('DOMContentLoaded', () => {
   const dossier = document.getElementById('project-dossier');
   const orbitDock = document.getElementById('orbit-dock');
   const cosmosBadge = document.getElementById('cosmos-badge');
-  const dockBtns = document.querySelectorAll('.dock-btn[data-target]');
+  const dockNodes = document.querySelectorAll('.constellation-node[data-target]');
   const scrollToCosmosBtn = document.getElementById('btn-scroll-to-cosmos');
+
+  // HUD Readout elements
+  const readoutOrbit = document.getElementById('readout-orbit-label');
+  const readoutName = document.getElementById('readout-project-name');
+  const readoutTech = document.getElementById('readout-project-tech');
 
   // Dossier elements
   const dossierBadge = document.getElementById('dossier-badge');
@@ -21,12 +26,17 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // Handle Project Selection from 3D canvas or Dock
   const handleProjectSelect = (projectData) => {
-    dockBtns.forEach(btn => btn.classList.remove('active'));
+    dockNodes.forEach(btn => btn.classList.remove('active'));
 
     if (projectData) {
-      // Find matching dock button
-      const targetBtn = document.querySelector(`.dock-btn[data-target="${projectData.id}"]`);
-      if (targetBtn) targetBtn.classList.add('active');
+      // Find matching dock node
+      const targetBtn = document.querySelector(`.constellation-node[data-target="${projectData.id}"]`);
+      if (targetBtn) {
+        targetBtn.classList.add('active');
+        if (readoutOrbit) readoutOrbit.textContent = (targetBtn.getAttribute('data-orbit') || 'ÓRBITA') + ':';
+        if (readoutName) readoutName.textContent = projectData.name;
+        if (readoutTech) readoutTech.textContent = '• ' + projectData.techName;
+      }
 
       if (dossierBadge) dossierBadge.textContent = projectData.badge;
       if (dossierTitle) dossierTitle.textContent = projectData.name;
@@ -52,8 +62,12 @@ document.addEventListener('DOMContentLoaded', () => {
       if (dossier) dossier.classList.add('active');
       audio.playWarp();
     } else {
-      const defaultBtn = document.querySelector('.dock-btn[data-target="singularidad"]');
+      const defaultBtn = document.querySelector('.constellation-node[data-target="singularidad"]');
       if (defaultBtn) defaultBtn.classList.add('active');
+
+      if (readoutOrbit) readoutOrbit.textContent = 'SISTEMA:';
+      if (readoutName) readoutName.textContent = 'Singularidad Gravitacional';
+      if (readoutTech) readoutTech.textContent = '• Vista General';
 
       if (dossier) dossier.classList.remove('active');
       audio.playClick();
@@ -96,26 +110,38 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 
-  // 3. Dock Button Interactions
-  dockBtns.forEach(btn => {
+  // 3. Constellation Dock Node Interactions
+  dockNodes.forEach(btn => {
     btn.addEventListener('click', (e) => {
       e.preventDefault();
       const targetId = btn.getAttribute('data-target');
       cosmos.focusProject(targetId);
       audio.playClick();
     });
+
+    btn.addEventListener('mouseenter', () => {
+      if (readoutName && !btn.classList.contains('active')) {
+        const tempName = btn.getAttribute('data-name');
+        const tempTech = btn.getAttribute('data-tech');
+        const tempOrbit = btn.getAttribute('data-orbit');
+        if (tempName) readoutName.textContent = tempName;
+        if (tempTech) readoutTech.textContent = '• ' + tempTech;
+        if (tempOrbit && readoutOrbit) readoutOrbit.textContent = tempOrbit + ':';
+      }
+    });
+
+    btn.addEventListener('mouseleave', () => {
+      const activeBtn = document.querySelector('.constellation-node.active');
+      if (activeBtn && readoutName) {
+        readoutName.textContent = activeBtn.getAttribute('data-name') || 'Singularidad Gravitacional';
+        if (readoutTech) readoutTech.textContent = '• ' + (activeBtn.getAttribute('data-tech') || 'Vista General');
+        if (readoutOrbit) readoutOrbit.textContent = (activeBtn.getAttribute('data-orbit') || 'SISTEMA') + ':';
+      }
+    });
   });
 
   if (dossierCloseBtn) {
     dossierCloseBtn.addEventListener('click', () => {
-      cosmos.focusProject('singularidad');
-    });
-  }
-
-  const brandHomeBtn = document.getElementById('btn-brand-home');
-  if (brandHomeBtn) {
-    brandHomeBtn.addEventListener('click', () => {
-      window.scrollTo({ top: 0, behavior: 'smooth' });
       cosmos.focusProject('singularidad');
     });
   }
@@ -132,7 +158,7 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 
-  const soundElements = document.querySelectorAll('button, .hud-btn, .dock-btn, a');
+  const soundElements = document.querySelectorAll('button, .action-pill, .constellation-node, a');
   soundElements.forEach(el => {
     el.addEventListener('mouseenter', () => audio.playHover());
   });

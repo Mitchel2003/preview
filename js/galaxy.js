@@ -30,11 +30,11 @@ export class CosmicCosmos {
         stack: 'C# • .NET 10 • Microsoft Azure • Azure SQL • Quiter ERP • CI/CD',
         desc: 'Plataforma empresarial de misión crítica para talleres y concesionarios automotrices. Sincronización bidireccional en tiempo real con ERP Quiter DMS, multitenancy estricto con RBAC, compuertas CI/CD con runners self-hosted y empaquetado para Google Play.',
         url: 'https://systime.co',
-        iconPath: 'assets/icons/dotnet.svg',
+        iconPath: 'assets/icons/csharp.svg',
         orbitRadius: 5.8,
         speed: 0.00042,
         angle: 0.9,
-        colorHex: '#10b981',
+        colorHex: '#9B4F96',
         isCore: false
       },
       {
@@ -462,38 +462,45 @@ export class CosmicCosmos {
       const nodeGroup = new THREE.Group();
 
       // Glowing Halo / Tech Beacon Ring (Subtle futuristic laser ring)
-      const ringGeo = new THREE.RingGeometry(0.38, 0.45, 32);
+      const ringGeo = new THREE.RingGeometry(0.32, 0.40, 32);
       const ringMat = new THREE.MeshBasicMaterial({
         color: new THREE.Color(data.colorHex),
         side: THREE.DoubleSide,
         transparent: true,
-        opacity: 0.65,
+        opacity: 0.75,
         blending: THREE.AdditiveBlending
       });
       const ringMesh = new THREE.Mesh(ringGeo, ringMat);
       ringMesh.rotation.x = Math.PI / 2;
       nodeGroup.add(ringMesh);
 
-      // Core Highlight Particle Beacon
-      const beaconGeo = new THREE.SphereGeometry(0.08, 16, 16);
-      const beaconMat = new THREE.MeshBasicMaterial({
-        color: 0xffffff
+      // Inner concentrated laser anchor (no solid egg/ball!)
+      const innerRingGeo = new THREE.RingGeometry(0.04, 0.12, 24);
+      const innerRingMat = new THREE.MeshBasicMaterial({
+        color: 0xffffff,
+        side: THREE.DoubleSide,
+        transparent: true,
+        opacity: 0.9,
+        blending: THREE.AdditiveBlending
       });
-      const beaconMesh = new THREE.Mesh(beaconGeo, beaconMat);
-      nodeGroup.add(beaconMesh);
+      const innerRingMesh = new THREE.Mesh(innerRingGeo, innerRingMat);
+      innerRingMesh.rotation.x = Math.PI / 2;
+      nodeGroup.add(innerRingMesh);
 
-      // 3. Floating 3D Official Tech Emblem Billboard (Crisp SVG Texture)
+      // 3. Floating 3D Official Tech Emblem Billboard (Crisp, Vibrant, True Brand Colors)
       const iconTexture = this.textureLoader.load(data.iconPath);
+      iconTexture.colorSpace = THREE.SRGBColorSpace;
       const spriteMat = new THREE.SpriteMaterial({
         map: iconTexture,
         transparent: true,
-        opacity: 0.98,
-        depthTest: false
+        opacity: 1.0,
+        depthTest: false,
+        toneMapped: false // Prevents ACESFilmic from washing out brand colors!
       });
       const iconSprite = new THREE.Sprite(spriteMat);
-      const iconScale = data.isCore ? 0.72 : 0.58;
+      const iconScale = data.isCore ? 0.76 : 0.62;
       iconSprite.scale.set(iconScale, iconScale, 1);
-      iconSprite.position.set(0, 0.48, 0);
+      iconSprite.position.set(0, 0.42, 0);
       nodeGroup.add(iconSprite);
 
       // 4. Invisible Hit-Sphere for Effortless Clickability

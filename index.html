@@ -28,42 +28,21 @@
   <div id="webgl-container"></div>
   <div class="cosmic-vignette"></div>
 
-  <!-- Minimalist Artistic HUD Header -->
-  <header class="hud-header">
-    <div class="hud-content">
-      <div class="hud-brand" id="btn-brand-home" style="cursor: pointer;">
-        <img src="https://github.com/Mitchel2003.png" alt="Michael Avilés" class="hud-avatar" width="34" height="34">
-        <div class="hud-callsign">
-          <span class="hud-name">Michael Antony Avilés</span>
-          <span class="hud-tag">DevOps Lead & Systems Architect</span>
-        </div>
-      </div>
-
-      <div class="hud-telemetry">
-        <div class="telemetry-item">
-          <span class="status-beacon"></span>
-          <span>Bogotá // Open to Missions</span>
-        </div>
-        <div class="telemetry-item" id="telemetry-time">
-          BOG: --:--:-- COT
-        </div>
-      </div>
-
-      <div class="hud-actions">
-        <button class="hud-btn" id="sound-toggle" title="Activar/Silenciar Audio">
-          <span id="sound-icon">🔊</span>
-          <span id="sound-label">Audio: Off</span>
-        </button>
-        <button class="hud-btn btn-open-cv" title="Ver Hoja de Vida Completa">
-          <span>Hoja de Vida</span>
-        </button>
-        <a href="https://linkedin.com/in/Mitchel2003" target="_blank" rel="noopener noreferrer" class="hud-btn primary">
-          <span>LinkedIn</span>
-          <span>↗</span>
-        </a>
-      </div>
-    </div>
-  </header>
+  <!-- Floating Corner Action Controls (Audio, CV, LinkedIn) -->
+  <aside class="floating-top-actions" aria-label="Controles del sistema">
+    <button class="action-pill" id="sound-toggle" title="Activar/Silenciar Audio">
+      <span id="sound-icon">🔊</span>
+      <span id="sound-label">Audio: Off</span>
+    </button>
+    <button class="action-pill btn-open-cv" title="Ver Hoja de Vida Completa">
+      <span>Hoja de Vida</span>
+    </button>
+    <a href="https://linkedin.com/in/Mitchel2003" target="_blank" rel="noopener noreferrer" class="action-pill primary" title="Conectar en LinkedIn">
+      <svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor"><path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/></svg>
+      <span>LinkedIn</span>
+      <span class="ctrl-arrow">↗</span>
+    </a>
+  </aside>
 
   <!-- Two-Phase Scroll Container -->
   <div class="scroll-wrapper" id="scroll-wrapper">
@@ -71,8 +50,22 @@
     <!-- PHASE 1: Artistic Executive Profile (Human, Elegant, Cursive Accents) -->
     <section class="section-presentation" id="sec-presentation">
       <div class="profile-artistic">
-        <span class="kicker-artistic">Ingeniero de Software & DevOps Lead</span>
-        <h1 class="name-artistic">Michael Antony Avilés</h1>
+        <div class="name-header-row">
+          <div>
+            <span class="kicker-artistic">Ingeniero de Software & DevOps Lead</span>
+            <h1 class="name-artistic">Michael Antony Avilés</h1>
+          </div>
+          <a href="https://github.com/Mitchel2003" target="_blank" rel="noopener noreferrer" class="github-profile-badge" title="Visitar GitHub @Mitchel2003">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+              <path fill-rule="evenodd" clip-rule="evenodd" d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.53 1.032 1.53 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z"/>
+            </svg>
+            <div class="github-badge-text">
+              <span class="github-label">GitHub</span>
+              <span class="github-handle">@Mitchel2003</span>
+            </div>
+            <span class="github-arrow">↗</span>
+          </a>
+        </div>
         <p class="subtitle-artistic">
           Arquitecturas multitenant, infraestructura en la nube y sistemas donde la confiabilidad absoluta es innegociable.
         </p>
@@ -169,37 +162,54 @@
     </div>
   </aside>
 
-  <!-- Tactical Orbital Dock (Bottom Selector with Real Tech Icons) -->
-  <nav class="orbit-dock" id="orbit-dock">
-    <button class="dock-btn active" data-target="singularidad">
-      <span class="dock-icon">⊙</span>
-      <span class="dock-text">Singularidad</span>
-    </button>
-    <button class="dock-btn" data-target="sysmed-v2" title="Proyecto Núcleo Central">
-      <img src="assets/icons/typescript.svg" alt="TypeScript" width="16" height="16">
-      <span class="dock-text">Sysmed v2 (Núcleo)</span>
-    </button>
-    <button class="dock-btn" data-target="systime" title="C# / .NET 10 - Actual">
-      <img src="assets/icons/dotnet.svg" alt=".NET" width="16" height="16">
-      <span class="dock-text">Systime (C# / .NET)</span>
-    </button>
-    <button class="dock-btn" data-target="ecommerce" title="TypeScript E-Commerce">
-      <img src="assets/icons/typescript.svg" alt="TypeScript" width="16" height="16">
-      <span class="dock-text">E-Commerce (TS)</span>
-    </button>
-    <button class="dock-btn" data-target="gestion-salud" title="JavaScript SisMed v0">
-      <img src="assets/icons/javascript.svg" alt="JavaScript" width="16" height="16">
-      <span class="dock-text">SisMed v0 (JS)</span>
-    </button>
-    <button class="dock-btn" data-target="kequi" title="Java App Kequi">
-      <img src="assets/icons/java.svg" alt="Java" width="16" height="16">
-      <span class="dock-text">App Kequi (Java)</span>
-    </button>
-    <button class="dock-btn" data-target="rpa-bots" title="Python & Win32 RPA">
-      <img src="assets/icons/python.svg" alt="Python" width="16" height="16">
-      <span class="dock-text">Bots RPA (Python)</span>
-    </button>
-  </nav>
+  <!-- Tactical Orbital Constellation Dock -->
+  <div class="dock-container" id="orbit-dock">
+    <div class="dock-hud-readout" id="dock-hud-readout">
+      <span class="readout-orbit" id="readout-orbit-label">SISTEMA:</span>
+      <span class="readout-name" id="readout-project-name">Singularidad Gravitacional</span>
+      <span class="readout-tech" id="readout-project-tech">• Vista General</span>
+    </div>
+
+    <nav class="constellation-dock">
+      <button class="constellation-node active" data-target="singularidad" data-orbit="CENTRO" data-name="Singularidad Gravitacional" data-tech="Vista General" title="Singularidad (Centro)">
+        <span class="node-icon-symbol">⊙</span>
+        <span class="node-tooltip">Singularidad</span>
+      </button>
+
+      <div class="constellation-divider"></div>
+
+      <button class="constellation-node core-node" data-target="sysmed-v2" data-orbit="NÚCLEO" data-name="Sysmed v2" data-tech="TypeScript / Node.js" title="Sysmed v2 (Proyecto Núcleo)">
+        <img src="assets/icons/typescript.svg" alt="TypeScript" width="22" height="22" class="node-icon-img">
+        <span class="node-core-ring"></span>
+        <span class="node-tooltip">Sysmed v2 (Núcleo)</span>
+      </button>
+
+      <button class="constellation-node" data-target="systime" data-orbit="ÓRBITA I" data-name="Systime Enterprise" data-tech="C# / .NET 10" title="Systime Enterprise (C# / .NET 10)">
+        <img src="assets/icons/csharp.svg" alt="C#" width="22" height="22" class="node-icon-img">
+        <span class="node-tooltip">Systime (C#)</span>
+      </button>
+
+      <button class="constellation-node" data-target="ecommerce" data-orbit="ÓRBITA II" data-name="E-Commerce Platform" data-tech="TypeScript / React" title="E-Commerce (TypeScript)">
+        <img src="assets/icons/typescript.svg" alt="TypeScript" width="22" height="22" class="node-icon-img">
+        <span class="node-tooltip">E-Commerce (TS)</span>
+      </button>
+
+      <button class="constellation-node" data-target="gestion-salud" data-orbit="ÓRBITA III" data-name="SisMed v0 / Gestión Salud" data-tech="JavaScript / Web" title="SisMed v0 (JavaScript)">
+        <img src="assets/icons/javascript.svg" alt="JavaScript" width="22" height="22" class="node-icon-img">
+        <span class="node-tooltip">SisMed v0 (JS)</span>
+      </button>
+
+      <button class="constellation-node" data-target="kequi" data-orbit="ÓRBITA IV" data-name="App Kequi" data-tech="Java / Android" title="App Kequi (Java)">
+        <img src="assets/icons/java.svg" alt="Java" width="22" height="22" class="node-icon-img">
+        <span class="node-tooltip">App Kequi (Java)</span>
+      </button>
+
+      <button class="constellation-node" data-target="rpa-bots" data-orbit="ÓRBITA V" data-name="Bots RPA & Win32" data-tech="Python & Win32" title="Bots RPA (Python & Win32)">
+        <img src="assets/icons/python.svg" alt="Python" width="22" height="22" class="node-icon-img">
+        <span class="node-tooltip">Bots RPA (Python)</span>
+      </button>
+    </nav>
+  </div>
 
   <!-- Interactive CV Modal Viewer -->
   <div class="modal-backdrop" id="cv-modal-backdrop">
