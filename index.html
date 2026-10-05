@@ -148,10 +148,13 @@
     </div>
 
     <div class="dossier-footer">
-      <a href="#" target="_blank" rel="noopener noreferrer" class="dossier-btn-main" id="dossier-link">
-        <span>Ir al Proyecto / Repositorio</span>
-        <span>↗</span>
-      </a>
+      <div class="dossier-actions-primary">
+        <a href="#" target="_blank" rel="noopener noreferrer" class="dossier-btn-main" id="dossier-link">
+          <span id="dossier-link-text">Visualizar Proyecto en Vivo</span>
+          <span>↗</span>
+        </a>
+        <span class="dossier-secondary-badge" id="dossier-secondary-badge" style="display: none;"></span>
+      </div>
       <button class="dossier-btn-sub btn-open-cv">
         <span>Ficha en CV</span>
       </button>
@@ -174,10 +177,10 @@
 
       <div class="constellation-divider"></div>
 
-      <button class="constellation-node core-node" data-target="sysmed-v2" data-orbit="NÚCLEO" data-name="Sysmed v2" data-tech="TypeScript / Node.js" title="Sysmed v2 (Proyecto Núcleo)">
+      <button class="constellation-node core-node" data-target="sysmed-v2" data-orbit="NÚCLEO" data-name="Sysmed (v1 & v2)" data-tech="TypeScript / Node.js" title="Sysmed (v1 En Vivo • v2 Próximamente)">
         <img src="assets/icons/typescript.svg" alt="TypeScript" width="22" height="22" class="node-icon-img">
         <span class="node-core-ring"></span>
-        <span class="node-tooltip">Sysmed v2 (Núcleo)</span>
+        <span class="node-tooltip">Sysmed (Núcleo)</span>
       </button>
 
       <button class="constellation-node" data-target="systime" data-orbit="ÓRBITA I" data-name="Systime Enterprise" data-tech="C# / .NET 10" title="Systime Enterprise (C# / .NET 10)">

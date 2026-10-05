@@ -56,7 +56,26 @@ document.addEventListener('DOMContentLoaded', () => {
       }
 
       if (dossierLink) {
-        dossierLink.href = projectData.url || projectData.link || '#';
+        if (projectData.url) {
+          dossierLink.href = projectData.url;
+          dossierLink.style.display = 'inline-flex';
+          const linkTextEl = document.getElementById('dossier-link-text');
+          if (linkTextEl) {
+            linkTextEl.textContent = projectData.linkText || 'Visualizar Proyecto en Vivo';
+          }
+        } else {
+          dossierLink.style.display = 'none';
+        }
+      }
+
+      const secondaryBadge = document.getElementById('dossier-secondary-badge');
+      if (secondaryBadge) {
+        if (projectData.secondaryStatus) {
+          secondaryBadge.textContent = projectData.secondaryStatus;
+          secondaryBadge.style.display = 'inline-flex';
+        } else {
+          secondaryBadge.style.display = 'none';
+        }
       }
 
       if (dossier) dossier.classList.add('active');

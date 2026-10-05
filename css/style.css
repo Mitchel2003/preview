@@ -599,10 +599,32 @@ body.cosmos-artistic-mode {
   gap: 12px;
   border-top: 1px solid var(--border-delicate);
   padding-top: 18px;
+  align-items: flex-start;
+}
+
+.dossier-actions-primary {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.dossier-secondary-badge {
+  font-family: var(--font-mono);
+  font-size: 0.68rem;
+  color: var(--gold);
+  background: rgba(250, 204, 21, 0.08);
+  border: 1px solid rgba(250, 204, 21, 0.25);
+  border-radius: var(--radius-sm);
+  padding: 3px 8px;
+  display: inline-flex;
+  align-items: center;
+  align-self: flex-start;
+  letter-spacing: 0.06em;
 }
 
 .dossier-btn-main {
-  flex: 1;
+  width: 100%;
   font-family: var(--font-mono);
   font-size: 0.78rem;
   padding: 10px 16px;
