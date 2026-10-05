@@ -5,437 +5,172 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Michael Antony Avilés | DevOps Lead & Systems Engineer</title>
   
-  <meta name="description" content="Portfolio y portal profesional de Michael Antony Avilés. DevOps Lead, Arquitecturas Multitenant, Microsoft Azure, .NET 10 y Sistemas de Misión Crítica.">
+  <meta name="description" content="Portal interactivo 3D de Michael Antony Avilés. DevOps Lead, Arquitecturas Multitenant, Microsoft Azure, .NET 10 y Sistemas de Misión Crítica.">
   <meta property="og:title" content="Michael Antony Avilés | DevOps Lead & Systems Engineer">
-  <meta property="og:description" content="Diseño y despliegue de plataformas de misión crítica, infraestructura cloud en Azure y arquitecturas multitenant de alta disponibilidad.">
+  <meta property="og:description" content="Explorador 3D orbital de arquitecturas de misión crítica, infraestructura cloud en Azure y sistemas multitenant.">
   <meta property="og:type" content="website">
-  <meta name="theme-color" content="#03050c">
+  <meta name="theme-color" content="#010206">
 
   <link rel="stylesheet" href="css/style.css">
   
   <script type="importmap">
   {
     "imports": {
-      "three": "https://cdnjs.cloudflare.com/ajax/libs/three.js/0.160.0/three.module.min.js"
+      "three": "https://cdnjs.cloudflare.com/ajax/libs/three.js/0.160.0/three.module.min.js",
+      "three/addons/": "https://esm.sh/three@0.160.0/examples/jsm/"
     }
   }
   </script>
 </head>
-<body>
+<body class="cosmos-mode">
 
-  <!-- WebGL 3D Galaxy Canvas Layer -->
+  <!-- Fullscreen Interactive 3D WebGL Canvas Layer -->
   <div id="webgl-container"></div>
   <div class="cosmic-vignette"></div>
-  <div class="scanlines"></div>
 
-  <div class="app-container">
-    <!-- Sci-Fi HUD Header -->
-    <header class="hud-header">
-      <div class="hud-content">
-        <a href="#hero" class="hud-brand">
-          <img src="https://github.com/Mitchel2003.png" alt="Michael Avilés" class="hud-avatar" width="36" height="36">
-          <div class="hud-callsign">
-            <span class="hud-name">MICHAEL AVILÉS</span>
-            <span class="hud-tag">DEVOPS LEAD & SYSTEMS ENGINEER</span>
-          </div>
-        </a>
-
-        <div class="hud-telemetry">
-          <div class="telemetry-item">
-            <span style="color: var(--emerald);">●</span>
-            <span>STATUS: OPEN TO MISSIONS</span>
-          </div>
-          <div class="telemetry-item" id="telemetry-time">
-            BOG: --:--:-- COT
-          </div>
-          <div class="telemetry-item" style="color: var(--blue);">
-            WARP ENGINE: 100%
-          </div>
-        </div>
-
-        <div class="hud-actions">
-          <button class="hud-btn" id="sound-toggle" title="Activar/Silenciar Efectos de Audio">
-            <span id="sound-icon">🔊</span>
-            <span id="sound-label">FX: MUTED</span>
-          </button>
-          <a href="https://linkedin.com/in/Mitchel2003" target="_blank" rel="noopener noreferrer" class="hud-btn primary">
-            <span>LinkedIn</span>
-            <span>↗</span>
-          </a>
+  <!-- Minimalist Sci-Fi HUD Header -->
+  <header class="hud-header">
+    <div class="hud-content">
+      <div class="hud-brand" id="btn-brand-home" style="cursor: pointer;">
+        <img src="https://github.com/Mitchel2003.png" alt="Michael Avilés" class="hud-avatar" width="36" height="36">
+        <div class="hud-callsign">
+          <span class="hud-name">MICHAEL AVILÉS</span>
+          <span class="hud-tag">DEVOPS LEAD & SYSTEMS ARCHITECT</span>
         </div>
       </div>
-    </header>
 
-    <!-- Main Content Flow -->
-    <main>
-      <!-- Hero / Cosmos Section -->
-      <section class="hero" id="hero">
-        <div class="hero-badge">
-          <span>⚡ CORE DISCOVERY NODE</span>
-          <span>•</span>
-          <span>AZURE & .NET SPECIALIST</span>
+      <div class="hud-telemetry">
+        <div class="telemetry-item">
+          <span class="status-beacon"></span>
+          <span>ONLINE // OPEN TO MISSIONS</span>
         </div>
-
-        <h1 class="hero-title">
-          Construyendo Sistemas <br>
-          <span class="gradient-text">Resilientes & Multitenant</span>
-        </h1>
-
-        <p class="hero-lead">
-          Ingeniero de Software y DevOps Lead especializado en plataformas empresariales de misión crítica, 
-          integraciones bidireccionales con ERPs automotrices (Quiter DMS), compuertas CI/CD automatizadas 
-          con self-hosted runners e infraestructura cloud de alta disponibilidad en Microsoft Azure.
-        </p>
-
-        <div class="hero-actions">
-          <a href="#systems" class="hud-btn primary" style="padding: 12px 24px; font-size: 0.9rem;">
-            <span>Explorar Sistemas</span>
-            <span>↓</span>
-          </a>
-          <button class="hud-btn btn-open-cv" style="padding: 12px 24px; font-size: 0.9rem;">
-            <span>📄 Ver Hoja de Vida Completa</span>
-          </button>
-          <button class="hud-btn" id="btn-warp-jump" style="padding: 12px 20px; font-size: 0.85rem;" title="Acelerar motor de curvatura">
-            <span>✨ Pulso Warp</span>
-          </button>
+        <div class="telemetry-item" id="telemetry-time">
+          BOG: --:--:-- COT
         </div>
-
-        <div class="hero-stats">
-          <div class="stat-card">
-            <div class="stat-value">3+ Años</div>
-            <div class="stat-label">Trayectoria Ascendente</div>
-          </div>
-          <div class="stat-card">
-            <div class="stat-value">En Producción</div>
-            <div class="stat-label">Azure SQL & App Services</div>
-          </div>
-          <div class="stat-card">
-            <div class="stat-value">Quiter DMS</div>
-            <div class="stat-label">Sincronización ERP Tiempo Real</div>
-          </div>
-          <div class="stat-card">
-            <div class="stat-value">Zero-Downtime</div>
-            <div class="stat-label">GitHub Actions CI/CD Preflight</div>
-          </div>
+        <div class="telemetry-item" style="color: var(--blue);">
+          ORBITAL DYNAMICS: ACTIVE
         </div>
-      </section>
+      </div>
 
-      <!-- Enterprise Systems & Projects -->
-      <section id="systems">
-        <div class="section-header">
-          <div class="section-tag">// 01. PLANO ORBITAL // SISTEMAS EN ÓRBITA DE LA SINGULARIDAD</div>
-          <h2 class="section-title">Ecosistemas & Proyectos Críticos</h2>
-          <p style="color: var(--text-secondary); font-size: 0.95rem; margin-top: 6px; max-width: 720px;">
-            Plataformas activas orbitando el disco de acreción. Al hacer scroll la cámara desciende a su plano gravitacional; podés interactuar con cada nodo en 3D o revisar sus especificaciones técnicas.
-          </p>
-        </div>
+      <div class="hud-actions">
+        <button class="hud-btn" id="sound-toggle" title="Activar/Silenciar Efectos de Audio">
+          <span id="sound-icon">🔊</span>
+          <span id="sound-label">FX: MUTED</span>
+        </button>
+        <button class="hud-btn btn-open-cv" title="Ver Hoja de Vida Completa">
+          <span>📄 CV Oficial</span>
+        </button>
+        <a href="https://linkedin.com/in/Mitchel2003" target="_blank" rel="noopener noreferrer" class="hud-btn primary">
+          <span>LinkedIn</span>
+          <span>↗</span>
+        </a>
+      </div>
+    </div>
+  </header>
 
-        <div class="systems-grid">
-          <!-- Systime -->
-          <article class="system-card orbital-emerald" id="card-systime">
-            <div class="card-top">
-              <span class="card-badge production">● NÓDULO 01 // PRODUCCIÓN ACTIVA</span>
-              <h3 class="card-title">Plataforma Systime Enterprise</h3>
-              <p class="card-desc">
-                Ecosistema integral para talleres y concesionarios automotrices. 
-                Diseñado con sincronización bidireccional en tiempo real hacia el ERP Quiter DMS, 
-                multitenancy con estricto aislamiento de datos, control de acceso RBAC granular 
-                y empaquetado para distribución en Google Play Console.
-              </p>
-              <div class="tech-pills">
-                <span class="tech-pill">.NET 10</span>
-                <span class="tech-pill">C#</span>
-                <span class="tech-pill">Microsoft Azure</span>
-                <span class="tech-pill">Azure SQL</span>
-                <span class="tech-pill">GitHub Actions</span>
-                <span class="tech-pill">Quiter ERP</span>
-                <span class="tech-pill">Android</span>
-              </div>
-            </div>
-            <div class="card-footer">
-              <span style="font-family: var(--font-mono); font-size: 0.75rem; color: var(--emerald);">
-                ✓ Despliegues continuos desatendidos
-              </span>
-              <a href="#timeline" class="card-link">Detalles Rol <span>→</span></a>
-            </div>
-          </article>
+  <!-- Minimalist Hero Callout (Non-intrusive, floating) -->
+  <div class="hero-callout" id="hero-callout">
+    <div class="hero-kicker">
+      <span>⚡ GARGANTUA PLANETARIUM // SISTEMAS EN ÓRBITA</span>
+    </div>
+    <h1 class="hero-title-minimal">Sistemas de Misión Crítica & Cloud</h1>
+    <p class="hero-subtitle">
+      Explorá los sistemas en producción orbitando la singularidad. 
+      <strong>Hacé click y arrastrá</strong> para rotar 360°, <strong>rueda del mouse</strong> para zoom, o seleccioná un proyecto en el dock inferior para volar directamente a su órbita.
+    </p>
+    <div class="hero-hint">
+      <span>🖱️ Click & Arrastre: Rotar</span>
+      <span>•</span>
+      <span>🔍 Scroll: Zoom In/Out</span>
+      <span>•</span>
+      <span>🪐 Click en un Planeta: Ficha Técnica</span>
+    </div>
+  </div>
 
-          <!-- Sysmed / Ingest -->
-          <article class="system-card orbital-violet" id="card-sysmed">
-            <div class="card-top">
-              <span class="card-badge" style="color: #c4b5fd; border-color: rgba(139, 92, 246, 0.4);">● NÓDULO 02 // SECTOR BIOMÉDICO & INVIMA</span>
-              <h3 class="card-title">Sysmed / Ingest</h3>
-              <p class="card-desc">
-                Plataforma de gestión y trazabilidad biomédica alineada a estándares INVIMA. 
-                Construida con Arquitectura Hexagonal en TypeScript, invalidación inteligente de caché, 
-                colas de eventos asíncronas con Redis/BullMQ y modelo de permisos granulares CASL.
-              </p>
-              <div class="tech-pills">
-                <span class="tech-pill">TypeScript</span>
-                <span class="tech-pill">Node.js</span>
-                <span class="tech-pill">PostgreSQL</span>
-                <span class="tech-pill">Prisma ORM</span>
-                <span class="tech-pill">BullMQ / Redis</span>
-                <span class="tech-pill">MongoDB</span>
-                <span class="tech-pill">React 18</span>
-              </div>
-            </div>
-            <div class="card-footer">
-              <a href="https://github.com/Mitchel2003/mern_crud" target="_blank" rel="noopener noreferrer" class="card-link">
-                <span>Repositorio Prototipo (mern_crud)</span>
-                <span>↗</span>
-              </a>
-            </div>
-          </article>
+  <!-- Floating Holographic Project Dossier Panel -->
+  <aside class="project-dossier" id="project-dossier">
+    <div class="dossier-header">
+      <div>
+        <span class="dossier-badge" id="dossier-badge">PRODUCCIÓN ACTIVA</span>
+        <h2 class="dossier-title" id="dossier-title">Systime Enterprise</h2>
+        <span class="dossier-type" id="dossier-type">Gigante Anillado (Saturno)</span>
+      </div>
+      <button class="dossier-close" id="dossier-close" title="Cerrar y volver a la singularidad">✕</button>
+    </div>
 
-          <!-- Blazor & MAUI Clean Arch -->
-          <article class="system-card orbital-cyan" id="card-blazor">
-            <div class="card-top">
-              <span class="card-badge" style="color: #67e8f9; border-color: rgba(0, 245, 255, 0.4);">● NÓDULO 03 // ARQUITECTURA DE REFERENCIA</span>
-              <h3 class="card-title">Blazor WebAssembly & MAUI DDD</h3>
-              <p class="card-desc">
-                Solución arquitectónica de referencia en el ecosistema Microsoft .NET. 
-                Implementa Domain-Driven Design (DDD), separación rigurosa por capas desacopladas 
-                y ViewModels agnósticos a la interfaz de usuario bajo el patrón MVVM.
-              </p>
-              <div class="tech-pills">
-                <span class="tech-pill">Blazor WASM</span>
-                <span class="tech-pill">.NET 8</span>
-                <span class="tech-pill">C#</span>
-                <span class="tech-pill">Clean Architecture</span>
-                <span class="tech-pill">DDD</span>
-                <span class="tech-pill">MVVM</span>
-                <span class="tech-pill">xUnit</span>
-              </div>
-            </div>
-            <div class="card-footer">
-              <a href="https://github.com/Mitchel2003/Blazor-web-assembly" target="_blank" rel="noopener noreferrer" class="card-link">
-                <span>Ver en GitHub</span>
-                <span>↗</span>
-              </a>
-            </div>
-          </article>
+    <div class="dossier-body">
+      <div class="dossier-role" id="dossier-role">DevOps Lead & Systems Engineer</div>
+      <p class="dossier-desc" id="dossier-desc">
+        Ecosistema integral para talleres y concesionarios automotrices con sincronización bidireccional en tiempo real hacia ERP Quiter DMS.
+      </p>
 
-          <!-- RPA & Low-Level Automation -->
-          <article class="system-card orbital-amber" id="card-rpa">
-            <div class="card-top">
-              <span class="card-badge" style="color: #fde68a; border-color: rgba(245, 158, 11, 0.4);">● NÓDULO 04 // AUTOMATION & LOW-LEVEL</span>
-              <h3 class="card-title">RPA Bots & Win32 Native Systems</h3>
-              <p class="card-desc">
-                Desarrollo de bots de alta robustez para la automatización de flujos complejos. 
-                Soluciones web con Playwright y colas en Redis para evasión de bloqueos y captchas, 
-                así como herramientas de escritorio en C# con APIs nativas Win32 e inspección de pantalla en tiempo real.
-              </p>
-              <div class="tech-pills">
-                <span class="tech-pill">Playwright</span>
-                <span class="tech-pill">Win32 API</span>
-                <span class="tech-pill">C# Desktop</span>
-                <span class="tech-pill">Redis</span>
-                <span class="tech-pill">OCR</span>
-                <span class="tech-pill">BullMQ</span>
-              </div>
-            </div>
-            <div class="card-footer">
-              <span style="font-family: var(--font-mono); font-size: 0.75rem; color: var(--blue);">
-                Automatización de Procesos Críticos
-              </span>
-              <a href="https://github.com/Mitchel2003" target="_blank" rel="noopener noreferrer" class="card-link">GitHub <span>↗</span></a>
-            </div>
-          </article>
-        </div>
-      </section>
-
-      <!-- Architecture & Tech Stack Matrix -->
-      <section id="architecture">
-        <div class="section-header">
-          <div class="section-tag">// 02. COMPETENCIAS & STACK</div>
-          <h2 class="section-title">Matriz Arquitectónica & Cloud</h2>
-        </div>
-
-        <div class="stack-matrix">
-          <div class="stack-group">
-            <h4 class="group-title">
-              <span style="color: var(--cyan);">☁</span> DevOps & Cloud Platform
-            </h4>
-            <ul class="group-items">
-              <li><div class="bullet-dot"></div><strong>Microsoft Azure:</strong> App Services, Resource Groups, Azure SQL, App Insights.</li>
-              <li><div class="bullet-dot"></div><strong>CI/CD Pipelines:</strong> GitHub Actions, Self-hosted Runners, Preflight checks.</li>
-              <li><div class="bullet-dot"></div><strong>Contenerización:</strong> Docker, aislamiento de entornos.</li>
-              <li><div class="bullet-dot"></div><strong>Distribución Móvil:</strong> Google Play Console.</li>
-            </ul>
-          </div>
-
-          <div class="stack-group">
-            <h4 class="group-title">
-              <span style="color: var(--blue);">⚙</span> Backend & Patrones
-            </h4>
-            <ul class="group-items">
-              <li><div class="bullet-dot"></div><strong>Ecosistema .NET:</strong> .NET 8/10, C#, ASP.NET Core Web API, EF Core.</li>
-              <li><div class="bullet-dot"></div><strong>Node.js & TypeScript:</strong> Express, Prisma, arquitectura modular.</li>
-              <li><div class="bullet-dot"></div><strong>Patrones:</strong> Hexagonal Architecture, DDD, CQRS, Multitenancy.</li>
-              <li><div class="bullet-dot"></div><strong>Seguridad:</strong> Control de acceso RBAC granular con CASL.</li>
-            </ul>
-          </div>
-
-          <div class="stack-group">
-            <h4 class="group-title">
-              <span style="color: var(--violet);">⚡</span> Frontend & Interfaces
-            </h4>
-            <ul class="group-items">
-              <li><div class="bullet-dot"></div><strong>TypeScript & React 18:</strong> SPAs reactivas, arquitectura por capas.</li>
-              <li><div class="bullet-dot"></div><strong>Gestión de Estado:</strong> TanStack Query, TanStack Router.</li>
-              <li><div class="bullet-dot"></div><strong>Blazor WebAssembly:</strong> MVVM en .NET para web interactiva.</li>
-              <li><div class="bullet-dot"></div><strong>Estilos:</strong> TailwindCSS, sistemas de diseño y componentes atómicos.</li>
-            </ul>
-          </div>
-
-          <div class="stack-group">
-            <h4 class="group-title">
-              <span style="color: var(--emerald);">💾</span> Datos, Colas & Rendimiento
-            </h4>
-            <ul class="group-items">
-              <li><div class="bullet-dot"></div><strong>Bases Relacionales:</strong> SQL Server (T-SQL, índices, tuning), PostgreSQL.</li>
-              <li><div class="bullet-dot"></div><strong>Caché & Mensajería:</strong> Redis, BullMQ para colas en segundo plano.</li>
-              <li><div class="bullet-dot"></div><strong>NoSQL:</strong> MongoDB con agregaciones complejas.</li>
-              <li><div class="bullet-dot"></div><strong>Testing & QA:</strong> xUnit, Vitest, pruebas de arquitectura.</li>
-            </ul>
-          </div>
-        </div>
-      </section>
-
-      <!-- Professional Career Timeline -->
-      <section id="timeline">
-        <div class="section-header">
-          <div class="section-tag">// 03. TRAYECTORIA PROFESIONAL</div>
-          <h2 class="section-title">Evolución & Liderazgo Técnico</h2>
-        </div>
-
-        <div class="timeline">
-          <div class="timeline-item">
-            <div class="timeline-node"></div>
-            <div class="timeline-period">Jul 2025 – Presente (1 año y 3 meses)</div>
-            <h3 class="timeline-role">DevOps Lead & Systems Engineer</h3>
-            <div class="timeline-company">Plataforma Systime Enterprise</div>
-            <ul class="timeline-bullets">
-              <li>Liderazgo directo de salidas a producción e infraestructura en Microsoft Azure (App Services, Resource Groups, Azure SQL).</li>
-              <li>Diseño y mantenimiento de pipelines CI/CD con GitHub Actions y runners self-hosted, compuertas arquitectónicas y migraciones desatendidas.</li>
-              <li>Sincronización bidireccional en tiempo real con ERP automotriz Quiter bajo multitenancy estricto y RBAC.</li>
-              <li>Gestión del ciclo de empaquetado y distribución de apps móviles en Google Play Console.</li>
-            </ul>
-          </div>
-
-          <div class="timeline-item">
-            <div class="timeline-node"></div>
-            <div class="timeline-period">Oct 2024 – Jun 2025 (9 meses)</div>
-            <h3 class="timeline-role">Full-Stack Engineer & Co-Diseñador de Arquitectura</h3>
-            <div class="timeline-company">Tecnoparque SENA & Equipo Biomédico (Sysmed)</div>
-            <ul class="timeline-bullets">
-              <li>Co-diseño y desarrollo de la plataforma de gestión biomédica y auditorías regulatorias INVIMA.</li>
-              <li>Arquitectura hexagonal en TypeScript, colas asíncronas BullMQ/Redis, persistencia PostgreSQL (Prisma) y agregaciones en MongoDB.</li>
-              <li>Sistema de autorización granular con CASL (RBAC) e interfaces SPA con React 18 y TailwindCSS.</li>
-            </ul>
-          </div>
-
-          <div class="timeline-item">
-            <div class="timeline-node"></div>
-            <div class="timeline-period">Oct 2023 – Jun 2024 (9 meses)</div>
-            <h3 class="timeline-role">Desarrollador Junior (Semillero & Proyecto de Grado)</h3>
-            <div class="timeline-company">WPost & SENA (Gestión Salud)</div>
-            <ul class="timeline-bullets">
-              <li>Formación técnica intensiva en semillero WPost en control de versiones en GitHub y metodologías profesionales.</li>
-              <li>Desarrollo integral del proyecto Gestión Salud, modelado de bases de datos relacionales y APIs REST fundamentales.</li>
-            </ul>
-          </div>
-        </div>
-      </section>
-
-      <!-- Live GitHub Activity & Analytics -->
-      <section id="github">
-        <div class="section-header">
-          <div class="section-tag">// 04. ACTIVIDAD OPEN SOURCE</div>
-          <h2 class="section-title">Métricas de Código & Repositorios</h2>
-        </div>
-
-        <div class="metrics-section">
-          <div class="metrics-grid">
-            <div class="metrics-images">
-              <a href="https://github.com/Mitchel2003" target="_blank" rel="noopener noreferrer">
-                <img src="https://streak-stats.demolab.com?user=Mitchel2003&theme=radical&hide_border=true" alt="GitHub Streak">
-              </a>
-              <a href="https://lapras.com/public/KFSJXU0" target="_blank" rel="noopener noreferrer">
-                <img src="https://lapras-card-generator.vercel.app/api/svg?e=3.28&b=3.36&i=2.46&b1=%230a0a0a&b2=%23c70000&i1=%23292929&i2=%23675b5b&l=en&u=KFSJXU0" alt="Lapras Card">
-              </a>
-            </div>
-
-            <div class="metrics-images">
-              <a href="https://github.com/Mitchel2003" target="_blank" rel="noopener noreferrer">
-                <img src="https://github-readme-stats.vercel.app/api/top-langs/?username=Mitchel2003&layout=compact&langs_count=8&theme=radical&hide_border=true" alt="Top Languages">
-              </a>
-              <a href="https://github.com/Mitchel2003" target="_blank" rel="noopener noreferrer">
-                <img src="https://github-readme-stats.vercel.app/api?username=Mitchel2003&show_icons=true&theme=radical&hide_border=true&include_all_commits=true&count_private=true" alt="GitHub Stats">
-              </a>
-            </div>
-
-            <div style="width: 100%; display: flex; justify-content: center; overflow-x: auto; padding: 10px 0;">
-              <picture>
-                <source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/Mitchel2003/Mitchel2003/output/github-contribution-grid-snake-dark.svg" />
-                <source media="(prefers-color-scheme: light)" srcset="https://raw.githubusercontent.com/Mitchel2003/Mitchel2003/output/github-contribution-grid-snake.svg" />
-                <img alt="Snake Contributions" src="https://raw.githubusercontent.com/Mitchel2003/Mitchel2003/output/github-contribution-grid-snake.svg" style="max-width: 100%; height: auto;">
-              </picture>
-            </div>
-          </div>
-        </div>
-      </section>
-    </main>
-
-    <!-- Floating Navigation Dock -->
-    <nav class="nav-dock">
-      <a href="#hero" class="dock-item active" data-focus="overview">Cosmos</a>
-      <a href="#systems" class="dock-item" data-focus="systems">Sistemas</a>
-      <a href="#architecture" class="dock-item" data-focus="architecture">Stack</a>
-      <a href="#timeline" class="dock-item" data-focus="timeline">Trayectoria</a>
-      <a href="#github" class="dock-item" data-focus="overview">GitHub</a>
-      <button class="dock-item btn-open-cv" style="background: none; cursor: pointer; border: none;">CV Oficial</button>
-    </nav>
-
-    <!-- Interactive CV Modal Viewer -->
-    <div class="modal-backdrop" id="cv-modal-backdrop">
-      <div class="cv-modal">
-        <div class="cv-modal-header">
-          <div class="cv-modal-title">
-            <span>📄</span>
-            <span>Michael Antony Avilés — Hoja de Vida Oficial (DevOps & Systems Lead)</span>
-          </div>
-          <div class="cv-modal-actions">
-            <button class="cv-modal-btn" id="btn-print-cv" title="Imprimir o guardar como PDF">
-              🖨 Imprimir / PDF
-            </button>
-            <a href="cv_template.html" target="_blank" class="cv-modal-btn" title="Abrir en pestaña completa">
-              ↗ Pestaña Nueva
-            </a>
-            <button class="cv-modal-btn" id="btn-close-cv" style="background: rgba(239, 68, 68, 0.2); border-color: rgba(239, 68, 68, 0.4);">
-              ✕ Cerrar [Esc]
-            </button>
-          </div>
-        </div>
-        <iframe id="cv-iframe" class="cv-iframe" src="cv_template.html" title="CV Viewer"></iframe>
+      <div class="dossier-section-label">STACK TECNOLÓGICO & PATRONES</div>
+      <div class="tech-pills" id="dossier-tech-pills">
+        <!-- Injected dynamically -->
       </div>
     </div>
 
-    <!-- Terminal Footer -->
-    <footer>
-      <div class="footer-content">
-        <p>MICHAEL ANTONY AVILÉS // SISTEMAS DE MISIÓN CRÍTICA & CLOUD AZURE</p>
-        <div style="display: flex; gap: 16px; margin-top: 6px;">
-          <a href="mailto:avilesmaicol.08@gmail.com" class="hud-btn" style="padding: 4px 10px; font-size: 0.72rem;">Email: avilesmaicol.08@gmail.com</a>
-          <a href="https://linkedin.com/in/Mitchel2003" target="_blank" rel="noopener noreferrer" class="hud-btn" style="padding: 4px 10px; font-size: 0.72rem;">LinkedIn</a>
-          <a href="https://github.com/Mitchel2003" target="_blank" rel="noopener noreferrer" class="hud-btn" style="padding: 4px 10px; font-size: 0.72rem;">GitHub</a>
+    <div class="dossier-footer">
+      <a href="#" target="_blank" rel="noopener noreferrer" class="hud-btn primary" id="dossier-link">
+        <span>Abrir Repositorio / Demo</span>
+        <span>↗</span>
+      </a>
+      <button class="hud-btn btn-open-cv">
+        <span>Ver en CV</span>
+      </button>
+    </div>
+  </aside>
+
+  <!-- Tactical Orbital Dock (Bottom Selector) -->
+  <nav class="orbit-dock">
+    <button class="dock-btn active" data-target="singularidad">
+      <span class="dock-icon">⊙</span>
+      <span class="dock-text">Singularidad</span>
+    </button>
+    <button class="dock-btn" data-target="systime">
+      <span class="dock-icon" style="color: #10b981;">🪐</span>
+      <span class="dock-text">Systime</span>
+    </button>
+    <button class="dock-btn" data-target="sysmed">
+      <span class="dock-icon" style="color: #8b5cf6;">🧬</span>
+      <span class="dock-text">Sysmed</span>
+    </button>
+    <button class="dock-btn" data-target="blazor">
+      <span class="dock-icon" style="color: #00f5ff;">⚡</span>
+      <span class="dock-text">Blazor DDD</span>
+    </button>
+    <button class="dock-btn" data-target="rpa">
+      <span class="dock-icon" style="color: #f59e0b;">🤖</span>
+      <span class="dock-text">RPA Bots</span>
+    </button>
+    <button class="dock-btn btn-open-cv">
+      <span class="dock-icon">📄</span>
+      <span class="dock-text">Hoja de Vida</span>
+    </button>
+  </nav>
+
+  <!-- Interactive CV Modal Viewer -->
+  <div class="modal-backdrop" id="cv-modal-backdrop">
+    <div class="cv-modal">
+      <div class="cv-modal-header">
+        <div class="cv-modal-title">
+          <span>📄</span>
+          <span>Michael Antony Avilés — Hoja de Vida Oficial (DevOps & Systems Lead)</span>
         </div>
-        <p style="font-size: 0.7rem; color: var(--text-muted); margin-top: 10px;">
-          Desarrollado con Three.js (WebGL), Web Audio API y arquitectura moderna sin dependencias de compilación.
-        </p>
+        <div class="cv-modal-actions">
+          <button class="cv-modal-btn" id="btn-print-cv" title="Imprimir o guardar como PDF">
+            🖨 Imprimir / PDF
+          </button>
+          <a href="cv_template.html" target="_blank" class="cv-modal-btn" title="Abrir en pestaña completa">
+            ↗ Pestaña Nueva
+          </a>
+          <button class="cv-modal-btn" id="btn-close-cv" style="background: rgba(239, 68, 68, 0.2); border-color: rgba(239, 68, 68, 0.4);">
+            ✕ Cerrar [Esc]
+          </button>
+        </div>
       </div>
-    </footer>
+      <iframe id="cv-iframe" class="cv-iframe" src="cv_template.html" title="CV Viewer"></iframe>
+    </div>
   </div>
 
   <script type="module" src="js/main.js"></script>
