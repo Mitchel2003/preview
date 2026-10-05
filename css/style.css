@@ -2,8 +2,8 @@
 
 :root {
   --bg-deep: #010206;
-  --bg-surface: rgba(5, 8, 20, 0.85);
-  --bg-card: rgba(8, 14, 32, 0.75);
+  --bg-surface: rgba(5, 8, 20, 0.82);
+  --bg-card: rgba(8, 14, 32, 0.78);
   --border-subtle: rgba(56, 189, 248, 0.18);
   --border-glow: rgba(0, 245, 255, 0.5);
   
@@ -11,7 +11,6 @@
   --cyan-glow: rgba(0, 245, 255, 0.3);
   --blue: #38bdf8;
   --violet: #8b5cf6;
-  --violet-glow: rgba(139, 92, 246, 0.35);
   --emerald: #10b981;
   --amber: #f59e0b;
   
@@ -34,17 +33,21 @@
   box-sizing: border-box;
 }
 
-html, body {
-  width: 100%;
-  height: 100%;
-  overflow: hidden;
+html {
+  scroll-behavior: smooth;
+  color-scheme: dark;
+}
+
+body.cosmos-scroll-mode {
   background-color: var(--bg-deep);
   color: var(--text-main);
   font-family: var(--font-sans);
-  user-select: none;
+  overflow-x: hidden;
+  overflow-y: auto;
+  min-height: 200vh;
 }
 
-/* 3D WebGL Canvas Layer - Takes full interactive control */
+/* 3D WebGL Canvas Layer - Fixed full viewport */
 #webgl-container {
   position: fixed;
   top: 0;
@@ -60,27 +63,26 @@ html, body {
   cursor: grabbing;
 }
 
-/* Cinematic Vignette */
 .cosmic-vignette {
   position: fixed;
   top: 0;
   left: 0;
   width: 100vw;
   height: 100vh;
-  background: radial-gradient(circle at 50% 50%, rgba(1, 2, 6, 0) 40%, rgba(1, 2, 6, 0.75) 100%);
+  background: radial-gradient(circle at 50% 50%, rgba(1, 2, 6, 0.1) 40%, rgba(1, 2, 6, 0.85) 100%);
   pointer-events: none;
   z-index: 2;
 }
 
-/* HUD Header */
+/* Fixed HUD Header */
 .hud-header {
   position: fixed;
   top: 0;
   left: 0;
   right: 0;
-  z-index: 50;
+  z-index: 80;
   padding: 12px 24px;
-  background: rgba(3, 6, 16, 0.75);
+  background: rgba(3, 6, 16, 0.82);
   backdrop-filter: blur(16px);
   -webkit-backdrop-filter: blur(16px);
   border-bottom: 1px solid var(--border-subtle);
@@ -198,88 +200,243 @@ html, body {
   font-weight: 600;
 }
 
-/* Minimalist Floating Hero Callout (Left side, non-obstructive) */
-.hero-callout {
-  position: fixed;
-  top: 85px;
-  left: 28px;
-  max-width: 440px;
-  z-index: 30;
-  pointer-events: none;
-  background: rgba(4, 7, 18, 0.55);
-  backdrop-filter: blur(14px);
-  -webkit-backdrop-filter: blur(14px);
-  padding: 20px 24px;
-  border-radius: var(--radius-md);
-  border: 1px solid rgba(56, 189, 248, 0.15);
-  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.5);
-  transition: opacity 0.4s ease, transform 0.4s ease;
+/* Two-Phase Scroll Wrapper */
+.scroll-wrapper {
+  position: relative;
+  z-index: 10;
+  width: 100%;
 }
 
-.hero-callout.faded {
-  opacity: 0.2;
-  transform: translateX(-15px);
+/* SECTION 1: Presentation & Authentic Profile */
+.section-presentation {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 95px 24px 60px 24px;
 }
 
-.hero-callout:hover {
-  opacity: 1 !important;
-  transform: translateX(0) !important;
+.profile-card {
+  max-width: 940px;
+  width: 100%;
+  background: rgba(3, 7, 18, 0.82);
+  backdrop-filter: blur(24px);
+  -webkit-backdrop-filter: blur(24px);
+  border: 1px solid rgba(56, 189, 248, 0.25);
+  border-radius: var(--radius-lg);
+  padding: 44px 48px;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.7), 0 0 35px rgba(0, 245, 255, 0.12);
+  position: relative;
+  overflow: hidden;
 }
 
-.hero-kicker {
+.profile-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: linear-gradient(90deg, transparent, var(--cyan), var(--violet), transparent);
+}
+
+.profile-header-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 5px 12px;
+  border-radius: 9999px;
+  background: rgba(0, 245, 255, 0.08);
+  border: 1px solid rgba(0, 245, 255, 0.25);
   font-family: var(--font-mono);
-  font-size: 0.72rem;
+  font-size: 0.75rem;
   color: var(--cyan);
-  letter-spacing: 0.15em;
-  margin-bottom: 6px;
-  display: inline-block;
+  margin-bottom: 16px;
 }
 
-.hero-title-minimal {
+.profile-name {
   font-family: var(--font-display);
-  font-size: 1.45rem;
-  font-weight: 700;
+  font-size: clamp(2.2rem, 4.5vw, 3.4rem);
+  font-weight: 800;
+  letter-spacing: -0.02em;
   color: #ffffff;
-  line-height: 1.25;
+  line-height: 1.1;
+  margin-bottom: 6px;
+}
+
+.profile-headline {
+  font-size: clamp(1.05rem, 2vw, 1.25rem);
+  color: var(--blue);
+  font-weight: 600;
+  margin-bottom: 20px;
+  line-height: 1.4;
+}
+
+.profile-bio {
+  font-size: 0.96rem;
+  color: var(--text-secondary);
+  line-height: 1.68;
+  margin-bottom: 32px;
+  max-width: 840px;
+}
+
+.profile-bio strong {
+  color: #ffffff;
+}
+
+/* Pillars Grid */
+.pillars-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 16px;
+  margin-bottom: 32px;
+}
+
+.pillar-item {
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: var(--radius-md);
+  padding: 18px 20px;
+  transition: all 0.25s ease;
+}
+
+.pillar-item:hover {
+  background: rgba(255, 255, 255, 0.06);
+  border-color: var(--border-glow);
+  transform: translateY(-2px);
+}
+
+.pillar-icon {
+  font-size: 1.4rem;
   margin-bottom: 8px;
 }
 
-.hero-subtitle {
-  font-size: 0.85rem;
+.pillar-title {
+  font-family: var(--font-display);
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: #ffffff;
+  margin-bottom: 6px;
+}
+
+.pillar-desc {
+  font-size: 0.82rem;
   color: var(--text-secondary);
   line-height: 1.5;
-  margin-bottom: 12px;
 }
 
-.hero-hint {
+.profile-actions {
   display: flex;
   flex-wrap: wrap;
-  align-items: center;
-  gap: 8px;
-  font-family: var(--font-mono);
-  font-size: 0.7rem;
-  color: var(--blue);
-  background: rgba(0, 245, 255, 0.06);
-  padding: 6px 10px;
-  border-radius: var(--radius-sm);
-  border: 1px solid rgba(0, 245, 255, 0.15);
+  gap: 12px;
+  margin-bottom: 24px;
 }
 
-/* Floating Holographic Project Dossier Panel */
+.scroll-prompt {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-family: var(--font-mono);
+  font-size: 0.74rem;
+  color: var(--blue);
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+  padding-top: 18px;
+}
+
+.scroll-mouse-icon {
+  width: 14px;
+  height: 22px;
+  border: 1.5px solid var(--cyan);
+  border-radius: 10px;
+  position: relative;
+  display: inline-block;
+  flex-shrink: 0;
+}
+
+.scroll-mouse-icon::after {
+  content: '';
+  position: absolute;
+  top: 4px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 2.5px;
+  height: 5px;
+  background-color: var(--cyan);
+  border-radius: 2px;
+  animation: mouseWheel 1.5s infinite;
+}
+
+@keyframes mouseWheel {
+  0% { transform: translate(-50%, 0); opacity: 1; }
+  100% { transform: translate(-50%, 8px); opacity: 0; }
+}
+
+/* SECTION 2: Cosmos Viewport Space */
+.section-cosmos {
+  min-height: 100vh;
+  position: relative;
+  pointer-events: none;
+}
+
+.cosmos-badge-overlay {
+  position: fixed;
+  top: 85px;
+  left: 28px;
+  max-width: 360px;
+  z-index: 30;
+  pointer-events: none;
+  background: rgba(3, 7, 18, 0.65);
+  backdrop-filter: blur(14px);
+  padding: 16px 20px;
+  border-radius: var(--radius-md);
+  border: 1px solid rgba(56, 189, 248, 0.15);
+  opacity: 0;
+  transform: translateY(-10px);
+  transition: opacity 0.4s ease, transform 0.4s ease;
+}
+
+.cosmos-badge-overlay.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.badge-tag {
+  font-family: var(--font-mono);
+  font-size: 0.68rem;
+  color: var(--cyan);
+  letter-spacing: 0.15em;
+  display: block;
+  margin-bottom: 4px;
+}
+
+.cosmos-badge-overlay h3 {
+  font-family: var(--font-display);
+  font-size: 1.15rem;
+  font-weight: 700;
+  color: #ffffff;
+  margin-bottom: 4px;
+}
+
+.cosmos-badge-overlay p {
+  font-size: 0.78rem;
+  color: var(--text-secondary);
+}
+
+/* Floating Holographic Project Dossier */
 .project-dossier {
   position: fixed;
   right: 28px;
   top: 85px;
-  bottom: 95px;
+  bottom: 85px;
   width: 400px;
-  max-width: calc(100vw - 40px);
-  z-index: 60;
-  background: rgba(5, 9, 24, 0.82);
+  max-width: calc(100vw - 36px);
+  z-index: 70;
+  background: rgba(4, 8, 22, 0.85);
   backdrop-filter: blur(24px);
   -webkit-backdrop-filter: blur(24px);
   border: 1px solid var(--border-glow);
   border-radius: var(--radius-lg);
-  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.7), 0 0 30px var(--cyan-glow);
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.75), 0 0 30px var(--cyan-glow);
   display: flex;
   flex-direction: column;
   justify-content: space-between;
@@ -300,7 +457,7 @@ html, body {
   display: flex;
   align-items: flex-start;
   justify-content: space-between;
-  margin-bottom: 18px;
+  margin-bottom: 16px;
 }
 
 .dossier-badge {
@@ -317,15 +474,15 @@ html, body {
 
 .dossier-title {
   font-family: var(--font-display);
-  font-size: 1.6rem;
+  font-size: 1.45rem;
   font-weight: 700;
   color: #ffffff;
-  line-height: 1.15;
+  line-height: 1.2;
 }
 
-.dossier-type {
+.dossier-tech-tag {
   font-family: var(--font-mono);
-  font-size: 0.78rem;
+  font-size: 0.76rem;
   color: var(--cyan);
   display: block;
   margin-top: 4px;
@@ -356,29 +513,29 @@ html, body {
   flex: 1;
   overflow-y: auto;
   padding-right: 6px;
-  margin-bottom: 20px;
+  margin-bottom: 18px;
 }
 
 .dossier-role {
   font-family: var(--font-mono);
-  font-size: 0.85rem;
+  font-size: 0.82rem;
   color: #c4b5fd;
   margin-bottom: 12px;
 }
 
 .dossier-desc {
-  font-size: 0.92rem;
+  font-size: 0.9rem;
   color: var(--text-secondary);
   line-height: 1.6;
-  margin-bottom: 20px;
+  margin-bottom: 18px;
 }
 
 .dossier-section-label {
   font-family: var(--font-mono);
-  font-size: 0.72rem;
+  font-size: 0.7rem;
   color: var(--cyan);
   letter-spacing: 0.1em;
-  margin-bottom: 10px;
+  margin-bottom: 8px;
 }
 
 .tech-pills {
@@ -401,10 +558,10 @@ html, body {
   display: flex;
   gap: 12px;
   border-top: 1px solid rgba(255, 255, 255, 0.1);
-  padding-top: 18px;
+  padding-top: 16px;
 }
 
-/* Tactical Orbital Dock (Bottom bar) */
+/* Tactical Orbital Dock (Bottom Selector) */
 .orbit-dock {
   position: fixed;
   bottom: 20px;
@@ -414,13 +571,21 @@ html, body {
   display: flex;
   align-items: center;
   gap: 6px;
-  background: rgba(4, 7, 18, 0.85);
+  background: rgba(3, 7, 18, 0.88);
   backdrop-filter: blur(20px);
   -webkit-backdrop-filter: blur(20px);
   border: 1px solid var(--border-subtle);
   border-radius: 9999px;
   padding: 6px 12px;
-  box-shadow: 0 12px 35px rgba(0, 0, 0, 0.7), 0 0 20px rgba(0, 245, 255, 0.15);
+  box-shadow: 0 12px 35px rgba(0, 0, 0, 0.75), 0 0 20px rgba(0, 245, 255, 0.15);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.4s ease, transform 0.4s ease;
+}
+
+.orbit-dock.visible {
+  opacity: 1;
+  pointer-events: auto;
 }
 
 .dock-btn {
@@ -434,9 +599,14 @@ html, body {
   cursor: pointer;
   display: inline-flex;
   align-items: center;
-  gap: 6px;
+  gap: 8px;
   transition: all 0.25s ease;
   white-space: nowrap;
+}
+
+.dock-btn img {
+  display: inline-block;
+  vertical-align: middle;
 }
 
 .dock-btn:hover, .dock-btn.active {
@@ -540,17 +710,18 @@ html, body {
   background: #f1f5f9;
 }
 
-/* Mobile Responsiveness */
+/* Responsive adjustments */
 @media (max-width: 768px) {
   .hud-telemetry {
     display: none;
   }
 
-  .hero-callout {
-    top: 75px;
-    left: 16px;
-    right: 16px;
-    max-width: none;
+  .profile-card {
+    padding: 28px 20px;
+  }
+
+  .profile-name {
+    font-size: 2rem;
   }
 
   .orbit-dock {
@@ -570,7 +741,7 @@ html, body {
     right: 16px;
     width: auto;
     top: auto;
-    bottom: 80px;
+    bottom: 75px;
     height: 60vh;
   }
 }

@@ -4,32 +4,33 @@ import { CosmicAudio } from './audio.js';
 document.addEventListener('DOMContentLoaded', () => {
   const audio = new CosmicAudio();
   const dossier = document.getElementById('project-dossier');
-  const heroCallout = document.getElementById('hero-callout');
+  const orbitDock = document.getElementById('orbit-dock');
+  const cosmosBadge = document.getElementById('cosmos-badge');
   const dockBtns = document.querySelectorAll('.dock-btn[data-target]');
+  const scrollToCosmosBtn = document.getElementById('btn-scroll-to-cosmos');
 
-  // Elements in the dossier
+  // Dossier elements
   const dossierBadge = document.getElementById('dossier-badge');
   const dossierTitle = document.getElementById('dossier-title');
-  const dossierType = document.getElementById('dossier-type');
+  const dossierTechTag = document.getElementById('dossier-tech-tag');
   const dossierRole = document.getElementById('dossier-role');
   const dossierDesc = document.getElementById('dossier-desc');
   const dossierTechPills = document.getElementById('dossier-tech-pills');
   const dossierLink = document.getElementById('dossier-link');
   const dossierCloseBtn = document.getElementById('dossier-close');
 
-  // Callback when a project is selected (via 3D click or dock button)
+  // Handle Project Selection from 3D canvas or Dock
   const handleProjectSelect = (projectData) => {
     dockBtns.forEach(btn => btn.classList.remove('active'));
 
     if (projectData) {
-      // Highlight dock button
+      // Find matching dock button
       const targetBtn = document.querySelector(`.dock-btn[data-target="${projectData.id}"]`);
       if (targetBtn) targetBtn.classList.add('active');
 
-      // Populate Dossier
       if (dossierBadge) dossierBadge.textContent = projectData.badge;
       if (dossierTitle) dossierTitle.textContent = projectData.name;
-      if (dossierType) dossierType.textContent = projectData.type;
+      if (dossierTechTag) dossierTechTag.textContent = projectData.techName;
       if (dossierRole) dossierRole.textContent = projectData.role;
       if (dossierDesc) dossierDesc.textContent = projectData.desc;
 
@@ -49,23 +50,53 @@ document.addEventListener('DOMContentLoaded', () => {
       }
 
       if (dossier) dossier.classList.add('active');
-      if (heroCallout) heroCallout.classList.add('faded');
       audio.playWarp();
     } else {
-      // Return to Singularidad overview
       const defaultBtn = document.querySelector('.dock-btn[data-target="singularidad"]');
       if (defaultBtn) defaultBtn.classList.add('active');
 
       if (dossier) dossier.classList.remove('active');
-      if (heroCallout) heroCallout.classList.remove('faded');
       audio.playClick();
     }
   };
 
-  // 1. Initialize 3D Planetarium & Gargantua Cosmos
+  // 1. Initialize 3D Engine
   const cosmos = new CosmicCosmos('webgl-container', handleProjectSelect);
 
-  // 2. Dock Button Interactions
+  // 2. Scroll Choreography for Two-Phase Experience
+  const onScroll = () => {
+    const scrollMax = document.documentElement.scrollHeight - window.innerHeight;
+    const progress = scrollMax > 0 ? window.scrollY / scrollMax : 0;
+
+    cosmos.setScrollProgress(progress);
+
+    if (progress > 0.25) {
+      if (orbitDock) orbitDock.classList.add('visible');
+      if (cosmosBadge) cosmosBadge.classList.add('visible');
+    } else {
+      if (orbitDock) orbitDock.classList.remove('visible');
+      if (cosmosBadge) cosmosBadge.classList.remove('visible');
+      if (dossier?.classList.contains('active') && progress === 0) {
+        cosmos.focusProject('singularidad');
+      }
+    }
+  };
+
+  window.addEventListener('scroll', onScroll, { passive: true });
+  onScroll(); // Initial check
+
+  if (scrollToCosmosBtn) {
+    scrollToCosmosBtn.addEventListener('click', (e) => {
+      e.preventDefault();
+      window.scrollTo({
+        top: window.innerHeight * 0.95,
+        behavior: 'smooth'
+      });
+      audio.playWarp();
+    });
+  }
+
+  // 3. Dock Button Interactions
   dockBtns.forEach(btn => {
     btn.addEventListener('click', (e) => {
       e.preventDefault();
@@ -84,11 +115,12 @@ document.addEventListener('DOMContentLoaded', () => {
   const brandHomeBtn = document.getElementById('btn-brand-home');
   if (brandHomeBtn) {
     brandHomeBtn.addEventListener('click', () => {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
       cosmos.focusProject('singularidad');
     });
   }
 
-  // 3. Audio Synthesizer Control
+  // 4. Audio Control
   const soundToggleBtn = document.getElementById('sound-toggle');
   const soundLabel = document.getElementById('sound-label');
 
@@ -100,13 +132,12 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 
-  // Bind subtle UI sounds to interactive elements
   const soundElements = document.querySelectorAll('button, .hud-btn, .dock-btn, a');
   soundElements.forEach(el => {
     el.addEventListener('mouseenter', () => audio.playHover());
   });
 
-  // 4. Telemetry Clock (Bogotá UTC-5)
+  // 5. Telemetry Clock (Bogotá UTC-5)
   const timeDisplay = document.getElementById('telemetry-time');
   if (timeDisplay) {
     const updateTime = () => {
@@ -124,7 +155,7 @@ document.addEventListener('DOMContentLoaded', () => {
     setInterval(updateTime, 1000);
   }
 
-  // 5. CV Modal Viewer
+  // 6. CV Modal Viewer
   const cvModalBackdrop = document.getElementById('cv-modal-backdrop');
   const cvFrame = document.getElementById('cv-iframe');
   const openCvBtns = document.querySelectorAll('.btn-open-cv');

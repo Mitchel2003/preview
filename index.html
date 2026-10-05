@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Michael Antony Avilés | DevOps Lead & Systems Engineer</title>
   
-  <meta name="description" content="Portal interactivo 3D de Michael Antony Avilés. DevOps Lead, Arquitecturas Multitenant, Microsoft Azure, .NET 10 y Sistemas de Misión Crítica.">
+  <meta name="description" content="Portfolio y portal profesional de Michael Antony Avilés. DevOps Lead, Arquitecturas Multitenant, Microsoft Azure, .NET 10 y Sistemas de Misión Crítica.">
   <meta property="og:title" content="Michael Antony Avilés | DevOps Lead & Systems Engineer">
   <meta property="og:description" content="Explorador 3D orbital de arquitecturas de misión crítica, infraestructura cloud en Azure y sistemas multitenant.">
   <meta property="og:type" content="website">
@@ -22,13 +22,13 @@
   }
   </script>
 </head>
-<body class="cosmos-mode">
+<body class="cosmos-scroll-mode">
 
   <!-- Fullscreen Interactive 3D WebGL Canvas Layer -->
   <div id="webgl-container"></div>
   <div class="cosmic-vignette"></div>
 
-  <!-- Minimalist Sci-Fi HUD Header -->
+  <!-- Persistent HUD Header -->
   <header class="hud-header">
     <div class="hud-content">
       <div class="hud-brand" id="btn-brand-home" style="cursor: pointer;">
@@ -42,18 +42,18 @@
       <div class="hud-telemetry">
         <div class="telemetry-item">
           <span class="status-beacon"></span>
-          <span>ONLINE // OPEN TO MISSIONS</span>
+          <span>BOGOTÁ // OPEN TO MISSIONS</span>
         </div>
         <div class="telemetry-item" id="telemetry-time">
           BOG: --:--:-- COT
         </div>
         <div class="telemetry-item" style="color: var(--blue);">
-          ORBITAL DYNAMICS: ACTIVE
+          ORBITAL ENGINES: ACTIVE
         </div>
       </div>
 
       <div class="hud-actions">
-        <button class="hud-btn" id="sound-toggle" title="Activar/Silenciar Efectos de Audio">
+        <button class="hud-btn" id="sound-toggle" title="Activar/Silenciar Efectos Sonoros">
           <span id="sound-icon">🔊</span>
           <span id="sound-label">FX: MUTED</span>
         </button>
@@ -68,23 +68,89 @@
     </div>
   </header>
 
-  <!-- Minimalist Hero Callout (Non-intrusive, floating) -->
-  <div class="hero-callout" id="hero-callout">
-    <div class="hero-kicker">
-      <span>⚡ GARGANTUA PLANETARIUM // SISTEMAS EN ÓRBITA</span>
-    </div>
-    <h1 class="hero-title-minimal">Sistemas de Misión Crítica & Cloud</h1>
-    <p class="hero-subtitle">
-      Explorá los sistemas en producción orbitando la singularidad. 
-      <strong>Hacé click y arrastrá</strong> para rotar 360°, <strong>rueda del mouse</strong> para zoom, o seleccioná un proyecto en el dock inferior para volar directamente a su órbita.
-    </p>
-    <div class="hero-hint">
-      <span>🖱️ Click & Arrastre: Rotar</span>
-      <span>•</span>
-      <span>🔍 Scroll: Zoom In/Out</span>
-      <span>•</span>
-      <span>🪐 Click en un Planeta: Ficha Técnica</span>
-    </div>
+  <!-- Scroll Container for Two-Phase Flow -->
+  <div class="scroll-wrapper" id="scroll-wrapper">
+
+    <!-- PHASE 1: Executive Profile Presentation (Authentic, Human, Grounded) -->
+    <section class="section-presentation" id="sec-presentation">
+      <div class="profile-card">
+        <div class="profile-header-badge">
+          <span>⚡ INGENIERO DE SISTEMAS & DEVOPS LEAD</span>
+          <span>•</span>
+          <span>BOGOTÁ, COLOMBIA (REMOTO)</span>
+        </div>
+
+        <h1 class="profile-name">Michael Antony Avilés</h1>
+        <h2 class="profile-headline">
+          Arquitecturas Multitenant, Microsoft Azure & Sistemas de Misión Crítica
+        </h2>
+
+        <p class="profile-bio">
+          Ingeniero de Software y DevOps con trayectoria real transitando desde semillero técnico y arquitectura hexagonal 
+          hasta liderar la infraestructura cloud y salidas a producción de plataformas empresariales críticas. 
+          Especialista en <strong>Microsoft Azure</strong>, pipelines CI/CD automatizados con <strong>GitHub Actions</strong> 
+          y runners self-hosted, e integraciones bidireccionales en tiempo real con <strong>ERPs automotrices (Quiter DMS)</strong> 
+          bajo aislamiento estricto de datos y control de acceso RBAC granular.
+        </p>
+
+        <!-- Key Pillars Grid -->
+        <div class="pillars-grid">
+          <div class="pillar-item">
+            <div class="pillar-icon">☁️</div>
+            <div class="pillar-title">Cloud & DevOps Lead</div>
+            <div class="pillar-desc">
+              Microsoft Azure (App Services, Azure SQL, Resource Groups), compuertas de pruebas arquitectónicas, preflight checks y despliegues desatendidos.
+            </div>
+          </div>
+
+          <div class="pillar-item">
+            <div class="pillar-icon">⚙️</div>
+            <div class="pillar-title">Backend & Multitenancy</div>
+            <div class="pillar-desc">
+              .NET 8/10, C#, ASP.NET Core, TypeScript, Arquitectura Hexagonal, DDD, CQRS e integración de datos con SQL Server, PostgreSQL y Redis.
+            </div>
+          </div>
+
+          <div class="pillar-item">
+            <div class="pillar-icon">🤖</div>
+            <div class="pillar-title">Automatización & Low-Level</div>
+            <div class="pillar-desc">
+              Bots RPA de alta robustez con Playwright y Redis para evasión de captchas, y herramientas en C# con APIs nativas Win32 e inspección de pantalla.
+            </div>
+          </div>
+        </div>
+
+        <div class="profile-actions">
+          <button class="hud-btn primary" id="btn-scroll-to-cosmos" style="padding: 12px 24px; font-size: 0.88rem;">
+            <span>Descender al Universo 3D</span>
+            <span>↓</span>
+          </button>
+          <button class="hud-btn btn-open-cv" style="padding: 12px 24px; font-size: 0.88rem;">
+            <span>📄 Abrir CV Completo</span>
+          </button>
+          <a href="https://github.com/Mitchel2003" target="_blank" rel="noopener noreferrer" class="hud-btn" style="padding: 12px 20px; font-size: 0.88rem;">
+            <span>GitHub (Mitchel2003)</span>
+            <span>↗</span>
+          </a>
+        </div>
+
+        <div class="scroll-prompt">
+          <span class="scroll-mouse-icon"></span>
+          <span>Scrollea hacia abajo para explorar el sistema orbital de tecnologías y proyectos</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- PHASE 2: Deep 3D Cosmos Space Viewport -->
+    <section class="section-cosmos" id="sec-cosmos">
+      <!-- Minimalist Context Badge in Cosmos Mode -->
+      <div class="cosmos-badge-overlay" id="cosmos-badge">
+        <span class="badge-tag">// FASE 02: ORBITAL PLANETARIUM</span>
+        <h3>Sistemas en Órbita de Gargantúa</h3>
+        <p>Hacé click en un planeta o arrastrá para orbitar en 360°.</p>
+      </div>
+    </section>
+
   </div>
 
   <!-- Floating Holographic Project Dossier Panel -->
@@ -93,7 +159,7 @@
       <div>
         <span class="dossier-badge" id="dossier-badge">PRODUCCIÓN ACTIVA</span>
         <h2 class="dossier-title" id="dossier-title">Systime Enterprise</h2>
-        <span class="dossier-type" id="dossier-type">Gigante Anillado (Saturno)</span>
+        <span class="dossier-tech-tag" id="dossier-tech-tag">.NET 10 / C#</span>
       </div>
       <button class="dossier-close" id="dossier-close" title="Cerrar y volver a la singularidad">✕</button>
     </div>
@@ -122,30 +188,30 @@
   </aside>
 
   <!-- Tactical Orbital Dock (Bottom Selector) -->
-  <nav class="orbit-dock">
+  <nav class="orbit-dock" id="orbit-dock">
     <button class="dock-btn active" data-target="singularidad">
       <span class="dock-icon">⊙</span>
       <span class="dock-text">Singularidad</span>
     </button>
-    <button class="dock-btn" data-target="systime">
-      <span class="dock-icon" style="color: #10b981;">🪐</span>
-      <span class="dock-text">Systime</span>
+    <button class="dock-btn" data-target="dotnet">
+      <img src="assets/icons/dotnet.svg" alt=".NET" width="16" height="16">
+      <span class="dock-text">.NET 10 / Systime</span>
     </button>
-    <button class="dock-btn" data-target="sysmed">
-      <span class="dock-icon" style="color: #8b5cf6;">🧬</span>
-      <span class="dock-text">Sysmed</span>
+    <button class="dock-btn" data-target="typescript">
+      <img src="assets/icons/typescript.svg" alt="TypeScript" width="16" height="16">
+      <span class="dock-text">TypeScript / Sysmed</span>
     </button>
-    <button class="dock-btn" data-target="blazor">
-      <span class="dock-icon" style="color: #00f5ff;">⚡</span>
-      <span class="dock-text">Blazor DDD</span>
+    <button class="dock-btn" data-target="azure">
+      <img src="assets/icons/azure.svg" alt="Azure" width="16" height="16">
+      <span class="dock-text">Azure Cloud</span>
     </button>
     <button class="dock-btn" data-target="rpa">
-      <span class="dock-icon" style="color: #f59e0b;">🤖</span>
-      <span class="dock-text">RPA Bots</span>
+      <img src="assets/icons/python.svg" alt="Python" width="16" height="16">
+      <span class="dock-text">Python / RPA</span>
     </button>
     <button class="dock-btn btn-open-cv">
       <span class="dock-icon">📄</span>
-      <span class="dock-text">Hoja de Vida</span>
+      <span class="dock-text">CV Oficial</span>
     </button>
   </nav>
 
