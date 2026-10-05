@@ -210,10 +210,7 @@ export class CosmicCosmos {
     // 7. Ambient Companion Celestial Systems (Planets with Moons)
     this.buildAmbientPlanets();
 
-    // 8. Distant Deep-Space Galaxies & Star Clusters
-    this.buildDistantGalaxies();
-
-    // 9. Dynamic Comets & Cosmic Entities
+    // 8. Dynamic Comets & Cosmic Entities
     this.initComets();
 
     this.bindEvents();
@@ -382,8 +379,8 @@ export class CosmicCosmos {
 
       this.dustRadii[i] = r;
       this.dustAngles[i] = angle;
-      // Keplerian velocity
-      this.dustSpeeds[i] = (0.014 / Math.sqrt(r)) * (0.8 + Math.random() * 0.4);
+      // Keplerian velocity - slowed down for graceful, hypnotic cosmic motion
+      this.dustSpeeds[i] = (0.0022 / Math.sqrt(r)) * (0.8 + Math.random() * 0.4);
 
       const col = new THREE.Color();
       if (r < 2.5) {
@@ -496,11 +493,11 @@ export class CosmicCosmos {
       orbitLine.rotation.z = this.blackHoleGroup.rotation.z;
       this.orbitsGroup.add(orbitLine);
 
-      // 2. Node Group (No solid balls!)
+      // 2. Node Group anchored to orbit
       const nodeGroup = new THREE.Group();
 
-      // Glowing Halo / Tech Beacon Ring (Subtle futuristic laser ring)
-      const ringGeo = new THREE.RingGeometry(0.32, 0.40, 32);
+      // Glowing Halo / Tech Beacon Ring on orbital plane (y = 0)
+      const ringGeo = new THREE.RingGeometry(0.28, 0.36, 32);
       const ringMat = new THREE.MeshBasicMaterial({
         color: new THREE.Color(data.colorHex),
         side: THREE.DoubleSide,
@@ -512,41 +509,98 @@ export class CosmicCosmos {
       ringMesh.rotation.x = Math.PI / 2;
       nodeGroup.add(ringMesh);
 
-      // Inner concentrated laser anchor (no solid egg/ball!)
-      const innerRingGeo = new THREE.RingGeometry(0.04, 0.12, 24);
+      // Inner concentrated laser anchor
+      const innerRingGeo = new THREE.RingGeometry(0.04, 0.10, 24);
       const innerRingMat = new THREE.MeshBasicMaterial({
         color: 0xffffff,
         side: THREE.DoubleSide,
         transparent: true,
-        opacity: 0.9,
+        opacity: 0.85,
         blending: THREE.AdditiveBlending
       });
       const innerRingMesh = new THREE.Mesh(innerRingGeo, innerRingMat);
       innerRingMesh.rotation.x = Math.PI / 2;
       nodeGroup.add(innerRingMesh);
 
-      // 3. Floating 3D Official Tech Emblem Billboard (Crisp, Vibrant, True Brand Colors)
+      // Vertical Holographic Light Conduit (projects up from the orbit ring to the badge)
+      const pillarGeo = new THREE.CylinderGeometry(0.012, 0.038, 0.42, 16, 1, true);
+      const pillarMat = new THREE.MeshBasicMaterial({
+        color: new THREE.Color(data.colorHex),
+        transparent: true,
+        opacity: 0.35,
+        blending: THREE.AdditiveBlending,
+        side: THREE.DoubleSide
+      });
+      const pillar = new THREE.Mesh(pillarGeo, pillarMat);
+      pillar.position.set(0, 0.21, 0);
+      nodeGroup.add(pillar);
+
+      // 3. Floating 3D Holographic Medallion (Always faces the viewer with realistic depth & shadow)
+      const billboardGroup = new THREE.Group();
+      billboardGroup.position.set(0, 0.42, 0);
+
+      // Occlusion Drop Shadow (Soft dark radial shadow grounding the badge against space)
+      const shadowMat = new THREE.SpriteMaterial({
+        map: this.particleTexture,
+        color: 0x000000,
+        transparent: true,
+        opacity: 0.82
+      });
+      const shadowSprite = new THREE.Sprite(shadowMat);
+      shadowSprite.scale.set(1.15, 1.15, 1);
+      shadowSprite.position.set(0, -0.02, -0.05);
+      billboardGroup.add(shadowSprite);
+
+      // Dark Obsidian Glass Backing Disc (Subtle frosted shield)
+      const glassGeo = new THREE.CircleGeometry(0.34, 32);
+      const glassMat = new THREE.MeshBasicMaterial({
+        color: 0x070b18,
+        transparent: true,
+        opacity: 0.88,
+        side: THREE.DoubleSide
+      });
+      const glassMesh = new THREE.Mesh(glassGeo, glassMat);
+      glassMesh.position.set(0, 0, -0.02);
+      billboardGroup.add(glassMesh);
+
+      // Glowing Perimeter Bezel / Border Ring
+      const bezelGeo = new THREE.RingGeometry(0.32, 0.35, 32);
+      const bezelMat = new THREE.MeshBasicMaterial({
+        color: new THREE.Color(data.colorHex),
+        transparent: true,
+        opacity: 0.80,
+        blending: THREE.AdditiveBlending,
+        side: THREE.DoubleSide
+      });
+      const bezelMesh = new THREE.Mesh(bezelGeo, bezelMat);
+      bezelMesh.position.set(0, 0, -0.015);
+      billboardGroup.add(bezelMesh);
+
+      // Crisp Official Tech Emblem (with depthTest: true!)
       const iconTexture = this.textureLoader.load(data.iconPath);
       iconTexture.colorSpace = THREE.SRGBColorSpace;
       const spriteMat = new THREE.SpriteMaterial({
         map: iconTexture,
         transparent: true,
-        opacity: 1.0,
-        depthTest: false,
-        toneMapped: false // Prevents ACESFilmic from washing out brand colors!
+        opacity: 0.96,
+        depthTest: true,
+        toneMapped: false
       });
       const iconSprite = new THREE.Sprite(spriteMat);
-      const iconScale = data.isCore ? 0.76 : 0.62;
+      const iconScale = data.isCore ? 0.50 : 0.42;
       iconSprite.scale.set(iconScale, iconScale, 1);
-      iconSprite.position.set(0, 0.42, 0);
-      nodeGroup.add(iconSprite);
+      iconSprite.position.set(0, 0, 0.01);
+      billboardGroup.add(iconSprite);
+
+      nodeGroup.add(billboardGroup);
 
       // 4. Invisible Hit-Sphere for Effortless Clickability
-      const hitGeo = new THREE.SphereGeometry(1.1, 16, 16);
+      const hitGeo = new THREE.SphereGeometry(1.0, 16, 16);
       const hitMat = new THREE.MeshBasicMaterial({
         visible: false
       });
       const hitMesh = new THREE.Mesh(hitGeo, hitMat);
+      hitMesh.position.set(0, 0.42, 0);
       hitMesh.userData = data;
       nodeGroup.add(hitMesh);
 
@@ -554,6 +608,7 @@ export class CosmicCosmos {
 
       this.emblemNodes.push({
         group: nodeGroup,
+        billboard: billboardGroup,
         sprite: iconSprite,
         ring: ringMesh,
         hitMesh: hitMesh,
@@ -592,10 +647,9 @@ export class CosmicCosmos {
     moonTex.colorSpace = THREE.SRGBColorSpace;
     const moonMat = new THREE.MeshStandardMaterial({
       map: moonTex,
-      emissiveMap: moonTex,
-      emissive: new THREE.Color(0xffffff),
-      emissiveIntensity: 0.35,
-      roughness: 0.6,
+      emissive: new THREE.Color(0x94a3b8),
+      emissiveIntensity: 0.15,
+      roughness: 0.65,
       metalness: 0.05
     });
 
@@ -604,11 +658,10 @@ export class CosmicCosmos {
     earthTex.colorSpace = THREE.SRGBColorSpace;
     const earthMat = new THREE.MeshStandardMaterial({
       map: earthTex,
-      emissiveMap: earthTex,
-      emissive: new THREE.Color(0xffffff),
-      emissiveIntensity: 0.42,
-      roughness: 0.45,
-      metalness: 0.1
+      emissive: new THREE.Color(0x1d4ed8),
+      emissiveIntensity: 0.15,
+      roughness: 0.55,
+      metalness: 0.05
     });
     const earthMesh = new THREE.Mesh(sphereGeo, earthMat);
     earthMesh.scale.set(0.38, 0.38, 0.38);
@@ -642,10 +695,9 @@ export class CosmicCosmos {
     jupiterTex.colorSpace = THREE.SRGBColorSpace;
     const jupiterMat = new THREE.MeshStandardMaterial({
       map: jupiterTex,
-      emissiveMap: jupiterTex,
-      emissive: new THREE.Color(0xffffff),
-      emissiveIntensity: 0.38,
-      roughness: 0.45,
+      emissive: new THREE.Color(0x92400e),
+      emissiveIntensity: 0.14,
+      roughness: 0.55,
       metalness: 0.05
     });
     const jupiterMesh = new THREE.Mesh(sphereGeo, jupiterMat);
@@ -683,28 +735,44 @@ export class CosmicCosmos {
     saturnTex.colorSpace = THREE.SRGBColorSpace;
     const saturnMat = new THREE.MeshStandardMaterial({
       map: saturnTex,
-      emissiveMap: saturnTex,
-      emissive: new THREE.Color(0xffffff),
-      emissiveIntensity: 0.38,
-      roughness: 0.48,
-      metalness: 0.1
+      emissive: new THREE.Color(0xb48c56),
+      emissiveIntensity: 0.12,
+      roughness: 0.65,
+      metalness: 0.05
     });
     const saturnMesh = new THREE.Mesh(sphereGeo, saturnMat);
     saturnMesh.scale.set(0.48, 0.48, 0.48);
 
     const ringTex = this.textureLoader.load('assets/textures/saturn_ring.png');
     ringTex.colorSpace = THREE.SRGBColorSpace;
-    const saturnRingGeo = new THREE.RingGeometry(0.62, 1.35, 64);
+    // Map Saturn rings radially so Cassini divisions form true concentric circles
+    const saturnRingGeo = new THREE.RingGeometry(0.62, 1.45, 64, 32);
+    const ringPos = saturnRingGeo.attributes.position;
+    const ringUv = saturnRingGeo.attributes.uv;
+    for (let i = 0; i < ringPos.count; i++) {
+      const rx = ringPos.getX(i);
+      const ry = ringPos.getY(i);
+      const r = Math.sqrt(rx * rx + ry * ry);
+      const u = (r - 0.62) / (1.45 - 0.62);
+      ringUv.setXY(i, u, 0.5);
+    }
+    ringUv.needsUpdate = true;
+
     const saturnRingMat = new THREE.MeshStandardMaterial({
       map: ringTex,
       side: THREE.DoubleSide,
       transparent: true,
-      opacity: 0.95,
-      roughness: 0.4
+      opacity: 0.92,
+      roughness: 0.55,
+      metalness: 0.05
     });
     const saturnRing = new THREE.Mesh(saturnRingGeo, saturnRingMat);
-    saturnRing.rotation.x = Math.PI / 2 + 0.35;
-    saturnRing.rotation.y = 0.15;
+    saturnRing.rotation.x = Math.PI / 2;
+
+    const saturnBodyGroup = new THREE.Group();
+    saturnBodyGroup.add(saturnMesh);
+    saturnBodyGroup.add(saturnRing);
+    saturnBodyGroup.rotation.z = 0.46; // Authentic 26.7° Saturnian axial tilt
 
     const sMoon1 = new THREE.Mesh(sphereGeo, moonMat);
     sMoon1.scale.set(0.07, 0.07, 0.07);
@@ -713,8 +781,7 @@ export class CosmicCosmos {
     ];
 
     const saturnSystem = new THREE.Group();
-    saturnSystem.add(saturnMesh);
-    saturnSystem.add(saturnRing);
+    saturnSystem.add(saturnBodyGroup);
     saturnMoons.forEach(m => saturnSystem.add(m.mesh));
 
     const saturnOrbitLine = createPlanetOrbitLine(24.0, 0xfacc15, 0.16);
@@ -736,10 +803,9 @@ export class CosmicCosmos {
     neptuneTex.colorSpace = THREE.SRGBColorSpace;
     const neptuneMat = new THREE.MeshStandardMaterial({
       map: neptuneTex,
-      emissiveMap: neptuneTex,
-      emissive: new THREE.Color(0xffffff),
-      emissiveIntensity: 0.40,
-      roughness: 0.5,
+      emissive: new THREE.Color(0x312e81),
+      emissiveIntensity: 0.18,
+      roughness: 0.55,
       metalness: 0.05
     });
     const neptuneMesh = new THREE.Mesh(sphereGeo, neptuneMat);
@@ -772,285 +838,22 @@ export class CosmicCosmos {
     this.scene.add(this.ambientPlanetsGroup);
   }
 
-  buildDistantGalaxies() {
-    this.distantGalaxiesGroup = new THREE.Group();
-    this.distantGalaxies = [];
-    this.distantMicroBlackHoles = [];
-
-    // Helper: Spiral Galaxy with radiant nuclear core
-    const createSpiralGalaxy = (starCount, armCount, radius, innerColor, outerColor, position, tilt) => {
-      const geo = new THREE.BufferGeometry();
-      const pos = new Float32Array(starCount * 3);
-      const col = new Float32Array(starCount * 3);
-
-      const cIn = new THREE.Color(innerColor);
-      const cOut = new THREE.Color(outerColor);
-
-      for (let i = 0; i < starCount; i++) {
-        const i3 = i * 3;
-        const armIndex = i % armCount;
-        const armAngle = (armIndex / armCount) * Math.PI * 2;
-        const dist = Math.pow(Math.random(), 2.0) * radius;
-        const spinAngle = dist * 0.85;
-
-        const spread = (Math.random() - 0.5) * (1.2 + dist * 0.18);
-        const height = (Math.random() - 0.5) * (0.6 + dist * 0.1);
-
-        pos[i3] = Math.cos(armAngle + spinAngle) * dist + spread;
-        pos[i3 + 1] = height;
-        pos[i3 + 2] = Math.sin(armAngle + spinAngle) * dist + spread;
-
-        const starCol = new THREE.Color().lerpColors(cIn, cOut, dist / radius);
-        col[i3] = starCol.r * (0.8 + Math.random() * 0.2);
-        col[i3 + 1] = starCol.g * (0.8 + Math.random() * 0.2);
-        col[i3 + 2] = starCol.b * (0.8 + Math.random() * 0.2);
-      }
-
-      geo.setAttribute('position', new THREE.BufferAttribute(pos, 3));
-      geo.setAttribute('color', new THREE.BufferAttribute(col, 3));
-
-      const mat = new THREE.PointsMaterial({
-        size: this.isMobile ? 0.95 : 1.35,
-        sizeAttenuation: true,
-        depthWrite: false,
-        blending: THREE.AdditiveBlending,
-        vertexColors: true,
-        map: this.particleTexture,
-        transparent: true,
-        opacity: 0.88
-      });
-
-      const points = new THREE.Points(geo, mat);
-      const group = new THREE.Group();
-      group.add(points);
-
-      // Luminous Galactic Core Beacon (Radiant Nucleus)
-      const coreMat = new THREE.SpriteMaterial({
-        map: this.particleTexture,
-        color: new THREE.Color(innerColor),
-        transparent: true,
-        opacity: 0.95,
-        blending: THREE.AdditiveBlending,
-        toneMapped: false
-      });
-      const coreSprite = new THREE.Sprite(coreMat);
-      coreSprite.scale.set(radius * 0.55, radius * 0.55, 1);
-      group.add(coreSprite);
-
-      group.position.copy(position);
-      if (tilt) group.rotation.copy(tilt);
-
-      return { group, points, rotationSpeed: 0.0005 };
-    };
-
-    // Helper: Elliptical Galaxy / Globular Cluster with luminous core
-    const createEllipticalGalaxy = (starCount, radius, colorHex, position, tilt) => {
-      const geo = new THREE.BufferGeometry();
-      const pos = new Float32Array(starCount * 3);
-      const col = new Float32Array(starCount * 3);
-      const cBase = new THREE.Color(colorHex);
-
-      for (let i = 0; i < starCount; i++) {
-        const i3 = i * 3;
-        const r = Math.pow(Math.random(), 1.7) * radius;
-        const theta = Math.random() * Math.PI * 2;
-        const phi = Math.acos(Math.random() * 2 - 1);
-
-        pos[i3] = r * Math.sin(phi) * Math.cos(theta);
-        pos[i3 + 1] = (r * Math.sin(phi) * Math.sin(theta)) * 0.55;
-        pos[i3 + 2] = (r * Math.cos(phi)) * 0.75;
-
-        col[i3] = cBase.r * (0.8 + Math.random() * 0.2);
-        col[i3 + 1] = cBase.g * (0.8 + Math.random() * 0.2);
-        col[i3 + 2] = cBase.b * (0.8 + Math.random() * 0.2);
-      }
-
-      geo.setAttribute('position', new THREE.BufferAttribute(pos, 3));
-      geo.setAttribute('color', new THREE.BufferAttribute(col, 3));
-
-      const mat = new THREE.PointsMaterial({
-        size: this.isMobile ? 0.90 : 1.25,
-        sizeAttenuation: true,
-        depthWrite: false,
-        blending: THREE.AdditiveBlending,
-        vertexColors: true,
-        map: this.particleTexture,
-        transparent: true,
-        opacity: 0.82
-      });
-
-      const points = new THREE.Points(geo, mat);
-      const group = new THREE.Group();
-      group.add(points);
-
-      // Core Sprite
-      const coreMat = new THREE.SpriteMaterial({
-        map: this.particleTexture,
-        color: cBase,
-        transparent: true,
-        opacity: 0.92,
-        blending: THREE.AdditiveBlending,
-        toneMapped: false
-      });
-      const coreSprite = new THREE.Sprite(coreMat);
-      coreSprite.scale.set(radius * 0.6, radius * 0.6, 1);
-      group.add(coreSprite);
-
-      group.position.copy(position);
-      if (tilt) group.rotation.copy(tilt);
-
-      return { group, points, rotationSpeed: 0.0003 };
-    };
-
-    // Helper: Distant Micro Black Hole / Relativistic Quasar
-    const createDistantMicroBlackHole = (position, colorHex, jetColorHex, tilt) => {
-      const group = new THREE.Group();
-
-      // 1. Pure Pitch-Black Event Horizon
-      const horizonGeo = new THREE.SphereGeometry(1.2, 28, 28);
-      const horizonMat = new THREE.MeshBasicMaterial({ color: 0x000000 });
-      const horizonMesh = new THREE.Mesh(horizonGeo, horizonMat);
-      group.add(horizonMesh);
-
-      // 2. Gravitational Lensing Halo (Dazzling outer ring)
-      const lensMat = new THREE.SpriteMaterial({
-        map: this.particleTexture,
-        color: new THREE.Color(colorHex),
-        transparent: true,
-        opacity: 0.88,
-        blending: THREE.AdditiveBlending,
-        toneMapped: false
-      });
-      const lensSprite = new THREE.Sprite(lensMat);
-      lensSprite.scale.set(7.0, 7.0, 1);
-      group.add(lensSprite);
-
-      // 3. Incandescent Accretion Torus
-      const torusGeo = new THREE.TorusGeometry(2.3, 0.24, 16, 64);
-      const torusMat = new THREE.MeshBasicMaterial({
-        color: new THREE.Color(colorHex),
-        transparent: true,
-        opacity: 0.95,
-        blending: THREE.AdditiveBlending
-      });
-      const torus = new THREE.Mesh(torusGeo, torusMat);
-      torus.rotation.x = Math.PI / 2 + 0.35;
-      group.add(torus);
-
-      // 4. Polar Relativistic Plasma Jets (Top & Bottom High-Energy Beams)
-      const jetsGroup = new THREE.Group();
-      const jetGeo = new THREE.CylinderGeometry(0.06, 0.45, 14.0, 16, 1, true);
-      const jetMat = new THREE.MeshBasicMaterial({
-        color: new THREE.Color(jetColorHex),
-        transparent: true,
-        opacity: 0.82,
-        blending: THREE.AdditiveBlending,
-        side: THREE.DoubleSide
-      });
-      const jetMesh = new THREE.Mesh(jetGeo, jetMat);
-      jetMesh.rotation.z = 0.35;
-      jetsGroup.add(jetMesh);
-
-      // Jet Tip Flares
-      const tipMat = new THREE.SpriteMaterial({
-        map: this.particleTexture,
-        color: new THREE.Color(jetColorHex),
-        transparent: true,
-        opacity: 0.95,
-        blending: THREE.AdditiveBlending,
-        toneMapped: false
-      });
-      const tipTop = new THREE.Sprite(tipMat);
-      tipTop.scale.set(3.2, 3.2, 1);
-      tipTop.position.set(-Math.sin(0.35) * 7.0, Math.cos(0.35) * 7.0, 0);
-      jetsGroup.add(tipTop);
-
-      const tipBottom = new THREE.Sprite(tipMat);
-      tipBottom.scale.set(3.2, 3.2, 1);
-      tipBottom.position.set(Math.sin(0.35) * 7.0, -Math.cos(0.35) * 7.0, 0);
-      jetsGroup.add(tipBottom);
-
-      group.add(jetsGroup);
-
-      group.position.copy(position);
-      if (tilt) group.rotation.copy(tilt);
-
-      return { group, torus, jets: jetsGroup, rotationSpeed: 0.012 };
-    };
-
-    // 1. Distant Micro Black Hole / Quasar I (Cyan & White Relativistic Jet)
-    const bh1 = createDistantMicroBlackHole(
-      new THREE.Vector3(-52, 24, -62),
-      0x00f5ff, 0xffffff,
-      new THREE.Euler(0.4, 0.6, -0.2)
-    );
-    this.distantMicroBlackHoles.push(bh1);
-    this.distantGalaxiesGroup.add(bh1.group);
-
-    // 2. Distant Micro Black Hole / Quasar II (Amber & Magenta Relativistic Jet)
-    const bh2 = createDistantMicroBlackHole(
-      new THREE.Vector3(58, -18, -55),
-      0xf59e0b, 0xd946ef,
-      new THREE.Euler(-0.3, 0.4, 0.5)
-    );
-    this.distantMicroBlackHoles.push(bh2);
-    this.distantGalaxiesGroup.add(bh2.group);
-
-    // 3. Andromeda Azure/Cyan Spiral in Deep Space
-    const g1 = createSpiralGalaxy(
-      2200, 2, 16, 0xffffff, 0x00f5ff,
-      new THREE.Vector3(-68, 40, -78),
-      new THREE.Euler(0.6, 0.4, -0.3)
-    );
-    this.distantGalaxies.push(g1);
-    this.distantGalaxiesGroup.add(g1.group);
-
-    // 4. Whirlpool Violet/Magenta Spiral in Deep Space
-    const g2 = createSpiralGalaxy(
-      1800, 3, 14, 0xffe4e6, 0xa855f7,
-      new THREE.Vector3(72, -30, -72),
-      new THREE.Euler(-0.5, 0.7, 0.5)
-    );
-    this.distantGalaxies.push(g2);
-    this.distantGalaxiesGroup.add(g2.group);
-
-    // 5. Golden Amber Elliptical Galaxy
-    const g3 = createEllipticalGalaxy(
-      1400, 11, 0xfacc15,
-      new THREE.Vector3(-54, -42, 65),
-      new THREE.Euler(0.3, -0.4, 0.4)
-    );
-    this.distantGalaxies.push(g3);
-    this.distantGalaxiesGroup.add(g3.group);
-
-    // 6. Compact Diamond Star Cluster
-    const g4 = createEllipticalGalaxy(
-      1000, 8, 0x38bdf8,
-      new THREE.Vector3(56, 46, 58),
-      new THREE.Euler(0.2, 0.5, -0.2)
-    );
-    this.distantGalaxies.push(g4);
-    this.distantGalaxiesGroup.add(g4.group);
-
-    this.scene.add(this.distantGalaxiesGroup);
-  }
-
   initComets() {
     this.activeComets = [];
-    this.maxActiveComets = 2;
-    this.nextCometTime = Date.now() + 1200;
+    this.maxActiveComets = 1;
+    this.nextCometTime = Date.now() + 3500;
   }
 
   spawnComet() {
     const cometGroup = new THREE.Group();
 
-    // 1. Incandescent White Nucleus Sphere
-    const nucleusGeo = new THREE.SphereGeometry(0.32, 16, 16);
+    // 1. Incandescent White Nucleus Sphere (Refined, miniature celestial needle)
+    const nucleusGeo = new THREE.SphereGeometry(0.09, 16, 16);
     const nucleusMat = new THREE.MeshBasicMaterial({ color: 0xffffff });
     const nucleusMesh = new THREE.Mesh(nucleusGeo, nucleusMat);
     cometGroup.add(nucleusMesh);
 
-    // 2. Multi-layered Brilliant Coma (Inner flare + outer ion atmosphere)
+    // 2. Multi-layered Brilliant Coma (Miniature diamond flare + soft ion halo)
     const flareMat = new THREE.SpriteMaterial({
       map: this.particleTexture,
       color: 0xffffff,
@@ -1060,10 +863,10 @@ export class CosmicCosmos {
       toneMapped: false
     });
     const flare = new THREE.Sprite(flareMat);
-    flare.scale.set(2.4, 2.4, 1);
+    flare.scale.set(0.70, 0.70, 1);
     cometGroup.add(flare);
 
-    const isCyanComet = Math.random() > 0.4;
+    const isCyanComet = Math.random() > 0.35;
     const comaColor = isCyanComet ? 0x00f5ff : 0xfde047;
     const tailEndColor = isCyanComet ? 0xa855f7 : 0xf97316;
 
@@ -1076,16 +879,15 @@ export class CosmicCosmos {
       toneMapped: false
     });
     const coma = new THREE.Sprite(comaMat);
-    coma.scale.set(5.2, 5.2, 1);
+    coma.scale.set(1.5, 1.5, 1);
     cometGroup.add(coma);
 
-    // 3. Volumetric Stardust Particle Tail System (Expanding 3D Particle Plume)
-    const maxParticles = 160;
+    // 3. Volumetric Stardust Particle Tail System (Fine, gossamer 3D trail)
+    const maxParticles = 65;
     const tailGeo = new THREE.BufferGeometry();
     const positions = new Float32Array(maxParticles * 3);
     const colors = new Float32Array(maxParticles * 3);
 
-    // Initialize all hidden
     for (let i = 0; i < maxParticles; i++) {
       positions[i * 3] = 0;
       positions[i * 3 + 1] = 0;
@@ -1099,35 +901,35 @@ export class CosmicCosmos {
     tailGeo.setAttribute('color', new THREE.BufferAttribute(colors, 3));
 
     const tailMat = new THREE.PointsMaterial({
-      size: this.isMobile ? 1.4 : 2.0,
+      size: this.isMobile ? 0.28 : 0.38,
       sizeAttenuation: true,
       depthWrite: false,
       blending: THREE.AdditiveBlending,
       vertexColors: true,
       map: this.particleTexture,
       transparent: true,
-      opacity: 0.92
+      opacity: 0.90
     });
     const tailPoints = new THREE.Points(tailGeo, tailMat);
 
     // Dynamic light cast by comet
-    const cometLight = new THREE.PointLight(comaColor, 3.2, 22, 1.2);
+    const cometLight = new THREE.PointLight(comaColor, 1.4, 12, 1.2);
     cometGroup.add(cometLight);
 
-    // Trajectory starting from visible peripheral sky, sweeping through the central system
+    // Trajectory starting from visible periphery, sweeping through the midground
     const side = Math.random() > 0.5 ? 1 : -1;
-    const startX = side * (18 + Math.random() * 8); // ±18 to ±26
-    const startY = 6 + Math.random() * 6;           // Above equatorial plane
-    const startZ = -12 + Math.random() * 8;         // Mid-back depth
+    const startX = side * (16 + Math.random() * 8);
+    const startY = 5 + Math.random() * 5;
+    const startZ = -10 + Math.random() * 6;
 
     cometGroup.position.set(startX, startY, startZ);
 
     const endX = -startX * (0.85 + Math.random() * 0.3);
-    const endY = -(2 + Math.random() * 4);
-    const endZ = 16 + Math.random() * 10;
+    const endY = -(1.5 + Math.random() * 3);
+    const endZ = 14 + Math.random() * 8;
 
     const dir = new THREE.Vector3(endX - startX, endY - startY, endZ - startZ).normalize();
-    const speed = 0.22 + Math.random() * 0.06;
+    const speed = 0.24 + Math.random() * 0.06;
     const velocity = dir.multiplyScalar(speed);
 
     this.scene.add(cometGroup);
@@ -1147,21 +949,21 @@ export class CosmicCosmos {
       midColor: new THREE.Color(comaColor),
       endColor: new THREE.Color(tailEndColor),
       life: 0,
-      maxLife: 260
+      maxLife: 240
     });
   }
 
   updateComets() {
     if (Date.now() > this.nextCometTime && this.activeComets.length < this.maxActiveComets) {
       this.spawnComet();
-      this.nextCometTime = Date.now() + 4500 + Math.random() * 5000;
+      this.nextCometTime = Date.now() + 14000 + Math.random() * 10000;
     }
 
     for (let i = this.activeComets.length - 1; i >= 0; i--) {
       const comet = this.activeComets[i];
       comet.life++;
 
-      // Subtle gravitational pull toward Singularity (0,0,0) curving path naturally
+      // Gravitational pull toward Singularity (0,0,0) curving path naturally
       const toCenter = new THREE.Vector3(0, 0, 0).sub(comet.group.position);
       const distToCenter = toCenter.length();
       if (distToCenter > 3.0) {
@@ -1172,25 +974,22 @@ export class CosmicCosmos {
       comet.group.position.add(comet.velocity);
 
       // Emit new volumetric stardust particles at comet nucleus
-      const emitCount = 2;
-      for (let e = 0; e < emitCount; e++) {
-        if (comet.particles.length < comet.maxParticles) {
-          const spread = 0.28;
-          comet.particles.push({
-            pos: comet.group.position.clone().add(new THREE.Vector3(
-              (Math.random() - 0.5) * spread,
-              (Math.random() - 0.5) * spread,
-              (Math.random() - 0.5) * spread
-            )),
-            vel: comet.velocity.clone().multiplyScalar(-0.12).add(new THREE.Vector3(
-              (Math.random() - 0.5) * 0.04,
-              (Math.random() - 0.5) * 0.04,
-              (Math.random() - 0.5) * 0.04
-            )),
-            age: 0,
-            maxAge: 45 + Math.random() * 25
-          });
-        }
+      if (comet.particles.length < comet.maxParticles) {
+        const spread = 0.06;
+        comet.particles.push({
+          pos: comet.group.position.clone().add(new THREE.Vector3(
+            (Math.random() - 0.5) * spread,
+            (Math.random() - 0.5) * spread,
+            (Math.random() - 0.5) * spread
+          )),
+          vel: comet.velocity.clone().multiplyScalar(-0.08).add(new THREE.Vector3(
+            (Math.random() - 0.5) * 0.015,
+            (Math.random() - 0.5) * 0.015,
+            (Math.random() - 0.5) * 0.015
+          )),
+          age: 0,
+          maxAge: 35 + Math.random() * 15
+        });
       }
 
       // Update active tail stardust particles
@@ -1207,7 +1006,6 @@ export class CosmicCosmos {
         }
       }
 
-      // Populate GPU buffer
       for (let idx = 0; idx < comet.maxParticles; idx++) {
         const idx3 = idx * 3;
         if (idx < comet.particles.length) {
@@ -1224,7 +1022,7 @@ export class CosmicCosmos {
             col.lerpColors(comet.midColor, comet.endColor, (progress - 0.25) / 0.75);
           }
 
-          const fade = Math.pow(1.0 - progress, 1.4);
+          const fade = Math.pow(1.0 - progress, 1.3);
           colArray[idx3] = col.r * fade;
           colArray[idx3 + 1] = col.g * fade;
           colArray[idx3 + 2] = col.b * fade;
@@ -1240,12 +1038,10 @@ export class CosmicCosmos {
       comet.tailGeo.attributes.position.needsUpdate = true;
       comet.tailGeo.attributes.color.needsUpdate = true;
 
-      // Pulse comet coma
-      const pulse = 1.0 + Math.sin(comet.life * 0.18) * 0.25;
-      comet.coma.scale.set(5.2 * pulse, 5.2 * pulse, 1);
+      const pulse = 1.0 + Math.sin(comet.life * 0.18) * 0.2;
+      comet.coma.scale.set(1.5 * pulse, 1.5 * pulse, 1);
 
-      // Out of bounds / life expired cleanup
-      if (comet.life > comet.maxLife || comet.group.position.length() > 90) {
+      if (comet.life > comet.maxLife || comet.group.position.length() > 80) {
         this.scene.remove(comet.group);
         this.scene.remove(comet.tailPoints);
         comet.tailGeo.dispose();
@@ -1361,6 +1157,11 @@ export class CosmicCosmos {
 
       item.group.position.copy(tiltedVec);
 
+      // Orient holographic medallion badge to camera smoothly
+      if (item.billboard) {
+        item.billboard.quaternion.copy(this.camera.quaternion);
+      }
+
       // Subtle breathing pulse for tech ring
       const ringScale = 1 + Math.sin(Date.now() * 0.003 + item.data.orbitRadius) * 0.12;
       item.ring.scale.set(ringScale, ringScale, ringScale);
@@ -1418,25 +1219,7 @@ export class CosmicCosmos {
       });
     }
 
-    // 7. Distant Deep-Space Galaxies slow spin
-    if (this.distantGalaxies) {
-      this.distantGalaxies.forEach((g) => {
-        g.points.rotation.y += g.rotationSpeed;
-      });
-    }
-
-    // 7b. Distant Micro Black Holes / Quasars accretion spin & jet energy pulse
-    if (this.distantMicroBlackHoles) {
-      this.distantMicroBlackHoles.forEach((bh) => {
-        bh.torus.rotation.z += bh.rotationSpeed;
-        if (bh.jets) {
-          const jetPulse = 1.0 + Math.sin(Date.now() * 0.005) * 0.08;
-          bh.jets.scale.set(jetPulse, 1.0, jetPulse);
-        }
-      });
-    }
-
-    // 8. Dynamic Comets update
+    // 7. Dynamic Comets update
     this.updateComets();
 
     this.controls.update();
