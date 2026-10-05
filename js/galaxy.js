@@ -496,111 +496,29 @@ export class CosmicCosmos {
       // 2. Node Group anchored to orbit
       const nodeGroup = new THREE.Group();
 
-      // Glowing Halo / Tech Beacon Ring on orbital plane (y = 0)
-      const ringGeo = new THREE.RingGeometry(0.28, 0.36, 32);
-      const ringMat = new THREE.MeshBasicMaterial({
-        color: new THREE.Color(data.colorHex),
-        side: THREE.DoubleSide,
-        transparent: true,
-        opacity: 0.75,
-        blending: THREE.AdditiveBlending
-      });
-      const ringMesh = new THREE.Mesh(ringGeo, ringMat);
-      ringMesh.rotation.x = Math.PI / 2;
-      nodeGroup.add(ringMesh);
-
-      // Inner concentrated laser anchor
-      const innerRingGeo = new THREE.RingGeometry(0.04, 0.10, 24);
-      const innerRingMat = new THREE.MeshBasicMaterial({
-        color: 0xffffff,
-        side: THREE.DoubleSide,
-        transparent: true,
-        opacity: 0.85,
-        blending: THREE.AdditiveBlending
-      });
-      const innerRingMesh = new THREE.Mesh(innerRingGeo, innerRingMat);
-      innerRingMesh.rotation.x = Math.PI / 2;
-      nodeGroup.add(innerRingMesh);
-
-      // Vertical Holographic Light Conduit (projects up from the orbit ring to the badge)
-      const pillarGeo = new THREE.CylinderGeometry(0.012, 0.038, 0.42, 16, 1, true);
-      const pillarMat = new THREE.MeshBasicMaterial({
-        color: new THREE.Color(data.colorHex),
-        transparent: true,
-        opacity: 0.35,
-        blending: THREE.AdditiveBlending,
-        side: THREE.DoubleSide
-      });
-      const pillar = new THREE.Mesh(pillarGeo, pillarMat);
-      pillar.position.set(0, 0.21, 0);
-      nodeGroup.add(pillar);
-
-      // 3. Floating 3D Holographic Medallion (Always faces the viewer with realistic depth & shadow)
-      const billboardGroup = new THREE.Group();
-      billboardGroup.position.set(0, 0.42, 0);
-
-      // Occlusion Drop Shadow (Soft dark radial shadow grounding the badge against space)
-      const shadowMat = new THREE.SpriteMaterial({
-        map: this.particleTexture,
-        color: 0x000000,
-        transparent: true,
-        opacity: 0.82
-      });
-      const shadowSprite = new THREE.Sprite(shadowMat);
-      shadowSprite.scale.set(1.15, 1.15, 1);
-      shadowSprite.position.set(0, -0.02, -0.05);
-      billboardGroup.add(shadowSprite);
-
-      // Dark Obsidian Glass Backing Disc (Subtle frosted shield)
-      const glassGeo = new THREE.CircleGeometry(0.34, 32);
-      const glassMat = new THREE.MeshBasicMaterial({
-        color: 0x070b18,
-        transparent: true,
-        opacity: 0.88,
-        side: THREE.DoubleSide
-      });
-      const glassMesh = new THREE.Mesh(glassGeo, glassMat);
-      glassMesh.position.set(0, 0, -0.02);
-      billboardGroup.add(glassMesh);
-
-      // Glowing Perimeter Bezel / Border Ring
-      const bezelGeo = new THREE.RingGeometry(0.32, 0.35, 32);
-      const bezelMat = new THREE.MeshBasicMaterial({
-        color: new THREE.Color(data.colorHex),
-        transparent: true,
-        opacity: 0.80,
-        blending: THREE.AdditiveBlending,
-        side: THREE.DoubleSide
-      });
-      const bezelMesh = new THREE.Mesh(bezelGeo, bezelMat);
-      bezelMesh.position.set(0, 0, -0.015);
-      billboardGroup.add(bezelMesh);
-
-      // Crisp Official Tech Emblem (with depthTest: true!)
+      // Pure Floating Tech Emblem Sprite (Unobstructed, crisp & true brand colors)
       const iconTexture = this.textureLoader.load(data.iconPath);
       iconTexture.colorSpace = THREE.SRGBColorSpace;
       const spriteMat = new THREE.SpriteMaterial({
         map: iconTexture,
         transparent: true,
-        opacity: 0.96,
-        depthTest: true,
+        opacity: 1.0,
+        depthTest: false,
         toneMapped: false
       });
       const iconSprite = new THREE.Sprite(spriteMat);
-      const iconScale = data.isCore ? 0.50 : 0.42;
+      const iconScale = data.isCore ? 0.76 : 0.62;
       iconSprite.scale.set(iconScale, iconScale, 1);
-      iconSprite.position.set(0, 0, 0.01);
-      billboardGroup.add(iconSprite);
+      iconSprite.position.set(0, 0, 0); // Positioned directly on the orbit line
+      nodeGroup.add(iconSprite);
 
-      nodeGroup.add(billboardGroup);
-
-      // 4. Invisible Hit-Sphere for Effortless Clickability
+      // Invisible Hit-Sphere for Effortless Clickability
       const hitGeo = new THREE.SphereGeometry(1.0, 16, 16);
       const hitMat = new THREE.MeshBasicMaterial({
         visible: false
       });
       const hitMesh = new THREE.Mesh(hitGeo, hitMat);
-      hitMesh.position.set(0, 0.42, 0);
+      hitMesh.position.set(0, 0, 0);
       hitMesh.userData = data;
       nodeGroup.add(hitMesh);
 
@@ -608,9 +526,7 @@ export class CosmicCosmos {
 
       this.emblemNodes.push({
         group: nodeGroup,
-        billboard: billboardGroup,
         sprite: iconSprite,
-        ring: ringMesh,
         hitMesh: hitMesh,
         data: data
       });
@@ -1157,14 +1073,10 @@ export class CosmicCosmos {
 
       item.group.position.copy(tiltedVec);
 
-      // Orient holographic medallion badge to camera smoothly
-      if (item.billboard) {
-        item.billboard.quaternion.copy(this.camera.quaternion);
-      }
-
-      // Subtle breathing pulse for tech ring
-      const ringScale = 1 + Math.sin(Date.now() * 0.003 + item.data.orbitRadius) * 0.12;
-      item.ring.scale.set(ringScale, ringScale, ringScale);
+      // Subtle organic breathing scale for the floating logo
+      const baseScale = item.data.isCore ? 0.76 : 0.62;
+      const pulse = 1 + Math.sin(Date.now() * 0.0025 + item.data.orbitRadius) * 0.04;
+      item.sprite.scale.set(baseScale * pulse, baseScale * pulse, 1);
     });
 
     // 4. Camera Dynamics: Two-Phase Scroll Transition & Project Focus
